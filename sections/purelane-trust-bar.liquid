@@ -1,0 +1,60 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-content.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign trust_blocks = section.blocks | where: 'type', 'trust_item'
+-%}
+
+<section class="pl-sec pl-trust-section pl-rv" data-pl-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-trust">
+      {%- for block in trust_blocks -%}
+        <div class="pl-trust-i" {{ block.shopify_attributes }}>
+          {% render 'purelane-icon', name: block.settings.icon %}
+          <span>{{ block.settings.label_line_1 | escape }}<br>{{ block.settings.label_line_2 | escape }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Trust Bar",
+  "tag": "section",
+  "class": "pl-trust-section",
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "recycle", "label": "Recycle" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "globe", "label": "Globe" }
+          ],
+          "default": "leaf"
+        },
+        { "type": "text", "id": "label_line_1", "label": "Label line 1", "default": "Plant derived" },
+        { "type": "text", "id": "label_line_2", "label": "Label line 2", "default": "formulas" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Trust Bar",
+      "blocks": [
+        { "type": "trust_item", "settings": { "icon": "leaf", "label_line_1": "Plant derived", "label_line_2": "formulas" } },
+        { "type": "trust_item", "settings": { "icon": "recycle", "label_line_1": "Recyclable", "label_line_2": "packaging" } },
+        { "type": "trust_item", "settings": { "icon": "heart", "label_line_1": "Safe for", "label_line_2": "kids & pets" } },
+        { "type": "trust_item", "settings": { "icon": "globe", "label_line_1": "Made in", "label_line_2": "India" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

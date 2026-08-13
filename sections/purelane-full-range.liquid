@@ -1,0 +1,75 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-content.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign range_blocks = section.blocks | where: 'type', 'product_item'
+  assign anchor_id = section.settings.anchor_id | default: 'range'
+-%}
+
+<section class="pl-sec pl-range-section pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="3" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-range">
+      <div class="pl-range-head">
+        <div>
+          {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+          <h2 class="pl-d2">{{ section.settings.heading | default: 'Every room, one shelf' }}</h2>
+        </div>
+        {%- if section.settings.body != blank -%}
+          <p class="pl-body-s" style="max-width:34ch;margin-bottom:4px">{{ section.settings.body }}</p>
+        {%- endif -%}
+      </div>
+      {%- if range_blocks.size > 0 -%}
+        <div class="pl-stripwrap">
+          <div class="pl-rangerow">
+            {%- for block in range_blocks -%}
+              {%- if block.settings.product != blank -%}
+                {% render 'purelane-product-media', product: block.settings.product, context: 'shot' %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- if section.settings.hint != blank -%}
+          <p class="pl-striphint">{{ section.settings.hint }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Full Range",
+  "tag": "section",
+  "class": "pl-range-section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Section anchor ID", "default": "range" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The full range" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every room, one shelf" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Floors, taps, kitchen, laundry, bathroom and hands. Fourteen plant-based formulas that replace every harsh bottle under your sink." },
+    { "type": "text", "id": "hint", "label": "Scroll hint", "default": "Swipe to see the full shelf" }
+  ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "Product",
+      "settings": [{ "type": "product", "id": "product", "label": "Product" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Full Range",
+      "blocks": [
+        { "type": "product_item", "settings": { "product": "natural-herbal-floor-cleaner" } },
+        { "type": "product_item", "settings": { "product": "tap-cleaner-limescale-remover" } },
+        { "type": "product_item", "settings": { "product": "kitchen-cleaner-foaming" } },
+        { "type": "product_item", "settings": { "product": "non-toxic-toilet-cleaner" } },
+        { "type": "product_item", "settings": { "product": "laundry-detergent-non-toxic" } },
+        { "type": "product_item", "settings": { "product": "organic-dishwash-liquid-gel" } },
+        { "type": "product_item", "settings": { "product": "copper-bronze-brass-cleaner" } },
+        { "type": "product_item", "settings": { "product": "washing-machine-cleaner-descaler" } },
+        { "type": "product_item", "settings": { "product": "gentle-hydrating-liquid-handwash" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,49 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-content.css' | asset_url | stylesheet_tag }}
+
+<section class="pl-sec pl-signup-section pl-rv" data-pl-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-signup">
+      {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.heading }}</h2>
+      {%- if section.settings.lede != blank -%}<p class="pl-lede" style="margin:0 auto">{{ section.settings.lede }}</p>{%- endif -%}
+
+      {% form 'customer', class: 'pl-signup__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter,purelane-club">
+        <label class="visually-hidden" for="pl-signup-email-{{ section.id }}">Email</label>
+        <input
+          id="pl-signup-email-{{ section.id }}"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ section.settings.placeholder | default: 'your@email.com' }}"
+          autocomplete="email"
+          required
+        >
+        <button class="pl-btn pl-btn--primary" type="submit">{{ section.settings.button_label }}</button>
+        {%- if form.posted_successfully? -%}
+          <p class="pl-signup__note">{{ section.settings.success_message }}</p>
+        {%- elsif form.errors -%}
+          <p class="pl-signup__note">{{ form.errors.messages.email | default: section.settings.error_message }}</p>
+        {%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Signup",
+  "tag": "section",
+  "class": "pl-signup-section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Join the Purelane Club" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get welcome savings on your first bundle" },
+    { "type": "textarea", "id": "lede", "label": "Subheading", "default": "Plus first access to new launches and restocks." },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "your@email.com" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Get my welcome offer" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thanks — check your inbox for your welcome offer." },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "Please enter a valid email address." }
+  ],
+  "presets": [{ "name": "Purelane Signup" }]
+}
+{% endschema %}

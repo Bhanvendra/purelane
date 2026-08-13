@@ -1,10 +1,44 @@
 /* Homepage canvas — prototype dark ink + scene backdrop + Purelane chrome */
+body.template-index {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
 .template-index {
   background: var(--pl-ink, #17102b);
   color: var(--pl-paper, #ece6f7);
   overflow-x: clip;
   padding-bottom: 74px;
-  -webkit-font-smoothing: antialiased;
+}
+
+body.template-index .pl-chrome,
+body.template-index [class*='pl-'] {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body.template-index h1,
+body.template-index h2,
+body.template-index h3,
+body.template-index h4,
+body.template-index h5,
+body.template-index h6,
+body.template-index p,
+body.template-index a,
+body.template-index button {
+  letter-spacing: inherit;
+}
+
+body.template-index .pl-btn {
+  font-size: 12.5px;
+  letter-spacing: 0.13em;
+  line-height: 1;
+}
+
+body.template-index .button:not(.pl-btn) {
+  font-family: inherit;
 }
 
 @media (min-width: 960px) {

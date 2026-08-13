@@ -18,6 +18,17 @@ REQUIRED_SECTIONS = [
     "purelane-reviews-rail",
 ]
 
+BONUS_SECTIONS = [
+    "purelane-ingredients",
+    "purelane-pillars",
+    "purelane-proof",
+    "purelane-full-range",
+    "purelane-why-bundles",
+    "purelane-categories",
+    "purelane-trust-bar",
+    "purelane-signup",
+]
+
 
 def read_text(relative: str) -> str:
     return (THEME_ROOT / relative).read_text(encoding="utf-8")
@@ -45,9 +56,16 @@ class TestRequiredFiles(unittest.TestCase):
             "assets/purelane-product-sprites.css",
             "assets/purelane-scenes.css",
             "assets/purelane-chrome.css",
+            "assets/purelane-content.css",
             "assets/purelane-homepage.js",
+            "assets/purelane-proof.js",
         ]:
             self.assertTrue((THEME_ROOT / rel).is_file(), f"Missing {rel}")
+
+    def test_bonus_sections_exist(self):
+        for handle in BONUS_SECTIONS:
+            path = THEME_ROOT / "sections" / f"{handle}.liquid"
+            self.assertTrue(path.is_file(), f"Missing bonus section {handle}")
 
 
 class TestThemeBase(unittest.TestCase):
@@ -68,9 +86,17 @@ class TestIndexTemplate(unittest.TestCase):
                 "purelane_header",
                 "purelane_hero",
                 "purelane_reviews",
+                "purelane_ingredients",
+                "purelane_pillars",
+                "purelane_proof",
                 "purelane_combos",
                 "purelane_bundles",
                 "purelane_shop",
+                "purelane_range",
+                "purelane_why_bundles",
+                "purelane_categories",
+                "purelane_trust",
+                "purelane_signup",
                 "purelane_footer",
             ],
         )
@@ -84,6 +110,19 @@ class TestIndexTemplate(unittest.TestCase):
             "purelane_reviews",
         ]:
             self.assertIn(key, self.index["sections"])
+
+    def test_nav_links_match_prototype(self):
+        header = self.index["sections"]["purelane_header"]
+        nav_labels = [
+            header["blocks"][key]["settings"]["label"]
+            for key in header["block_order"]
+            if header["blocks"][key]["type"] == "nav_link"
+        ]
+        self.assertEqual(nav_labels, ["Home", "Ingredients", "How it works", "Shop", "Bundles"])
+
+    def test_five_combos_configured(self):
+        combos = self.index["sections"]["purelane_combos"]["blocks"]
+        self.assertEqual(len(combos), 5)
 
     def test_hero_heading_lines(self):
         hero = self.index["sections"]["purelane_hero"]["settings"]

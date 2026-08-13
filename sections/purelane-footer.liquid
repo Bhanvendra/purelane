@@ -20,17 +20,28 @@
       {%- if section.settings.shop_heading != blank -%}
         <div class="pl-fcol">
           <h5>{{ section.settings.shop_heading }}</h5>
-          {%- if section.settings.shop_link_1_label != blank -%}<a href="{{ section.settings.shop_link_1_url | default: '#shop' }}">{{ section.settings.shop_link_1_label }}</a>{%- endif -%}
-          {%- if section.settings.shop_link_2_label != blank -%}<a href="{{ section.settings.shop_link_2_url | default: '#shop' }}">{{ section.settings.shop_link_2_label }}</a>{%- endif -%}
-          {%- if section.settings.shop_link_3_label != blank -%}<a href="{{ section.settings.shop_link_3_url | default: '#bundles' }}">{{ section.settings.shop_link_3_label }}</a>{%- endif -%}
+          {%- for i in (1..6) -%}
+            {%- capture label_key -%}shop_link_{{ i }}_label{%- endcapture -%}
+            {%- capture url_key -%}shop_link_{{ i }}_url{%- endcapture -%}
+            {%- assign label = section.settings[label_key] -%}
+            {%- if label != blank -%}
+              <a href="{{ section.settings[url_key] | default: '#shop' }}">{{ label }}</a>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       {%- endif -%}
 
       {%- if section.settings.about_heading != blank -%}
         <div class="pl-fcol">
           <h5>{{ section.settings.about_heading }}</h5>
-          {%- if section.settings.about_link_1_label != blank -%}<a href="{{ section.settings.about_link_1_url | default: '#reviews' }}">{{ section.settings.about_link_1_label }}</a>{%- endif -%}
-          {%- if section.settings.about_link_2_label != blank -%}<a href="{{ section.settings.about_link_2_url | default: '#reviews' }}">{{ section.settings.about_link_2_label }}</a>{%- endif -%}
+          {%- for i in (1..4) -%}
+            {%- capture label_key -%}about_link_{{ i }}_label{%- endcapture -%}
+            {%- capture url_key -%}about_link_{{ i }}_url{%- endcapture -%}
+            {%- assign label = section.settings[label_key] -%}
+            {%- if label != blank -%}
+              <a href="{{ section.settings[url_key] | default: '#reviews' }}">{{ label }}</a>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       {%- endif -%}
 
@@ -77,15 +88,25 @@
     { "type": "text", "id": "shop_heading", "label": "Shop column heading", "default": "Shop" },
     { "type": "text", "id": "shop_link_1_label", "label": "Shop link 1", "default": "Bestsellers" },
     { "type": "text", "id": "shop_link_1_url", "label": "Shop link 1 URL", "default": "#shop" },
-    { "type": "text", "id": "shop_link_2_label", "label": "Shop link 2", "default": "Combos" },
-    { "type": "text", "id": "shop_link_2_url", "label": "Shop link 2 URL", "default": "#combos" },
-    { "type": "text", "id": "shop_link_3_label", "label": "Shop link 3", "default": "Bundles" },
-    { "type": "text", "id": "shop_link_3_url", "label": "Shop link 3 URL", "default": "#bundles" },
+    { "type": "text", "id": "shop_link_2_label", "label": "Shop link 2", "default": "Kitchen" },
+    { "type": "text", "id": "shop_link_2_url", "label": "Shop link 2 URL", "default": "#shop" },
+    { "type": "text", "id": "shop_link_3_label", "label": "Shop link 3", "default": "Home" },
+    { "type": "text", "id": "shop_link_3_url", "label": "Shop link 3 URL", "default": "#shop" },
+    { "type": "text", "id": "shop_link_4_label", "label": "Shop link 4", "default": "Skin" },
+    { "type": "text", "id": "shop_link_4_url", "label": "Shop link 4 URL", "default": "#shop" },
+    { "type": "text", "id": "shop_link_5_label", "label": "Shop link 5", "default": "Starter kits" },
+    { "type": "text", "id": "shop_link_5_url", "label": "Shop link 5 URL", "default": "#bundles" },
+    { "type": "text", "id": "shop_link_6_label", "label": "Shop link 6" },
+    { "type": "text", "id": "shop_link_6_url", "label": "Shop link 6 URL", "default": "#shop" },
     { "type": "text", "id": "about_heading", "label": "About column heading", "default": "About" },
-    { "type": "text", "id": "about_link_1_label", "label": "About link 1", "default": "Reviews" },
-    { "type": "text", "id": "about_link_1_url", "label": "About link 1 URL", "default": "#reviews" },
-    { "type": "text", "id": "about_link_2_label", "label": "About link 2", "default": "How bundles work" },
-    { "type": "text", "id": "about_link_2_url", "label": "About link 2 URL", "default": "#bundles" },
+    { "type": "text", "id": "about_link_1_label", "label": "About link 1", "default": "How it works" },
+    { "type": "text", "id": "about_link_1_url", "label": "About link 1 URL", "default": "#how" },
+    { "type": "text", "id": "about_link_2_label", "label": "About link 2", "default": "Sustainability" },
+    { "type": "text", "id": "about_link_2_url", "label": "About link 2 URL", "default": "#ingredients" },
+    { "type": "text", "id": "about_link_3_label", "label": "About link 3", "default": "FAQs" },
+    { "type": "text", "id": "about_link_3_url", "label": "About link 3 URL", "default": "#proof" },
+    { "type": "text", "id": "about_link_4_label", "label": "About link 4", "default": "Reviews" },
+    { "type": "text", "id": "about_link_4_url", "label": "About link 4 URL", "default": "#reviews" },
     { "type": "text", "id": "contact_heading", "label": "Contact column heading", "default": "Get in touch" },
     { "type": "text", "id": "email", "label": "Email", "default": "hello@purelane.com" },
     { "type": "text", "id": "phone", "label": "Phone", "default": "+91 9930 123 234" },
@@ -94,7 +115,7 @@
     { "type": "text", "id": "legal_links", "label": "Legal links text", "default": "Privacy · Terms · Refunds · Contact" },
     { "type": "header", "content": "Mobile sticky CTA" },
     { "type": "checkbox", "id": "show_sticky", "label": "Show sticky bundle CTA on mobile", "default": true },
-    { "type": "text", "id": "sticky_heading", "label": "Sticky heading", "default": "Pick any 3, pay flat bundle price" },
+    { "type": "text", "id": "sticky_heading", "label": "Sticky heading", "default": "Buy 3 at flat bundle price" },
     { "type": "text", "id": "sticky_subheading", "label": "Sticky subheading", "default": "Free shipping, always" },
     { "type": "text", "id": "sticky_label", "label": "Sticky button label", "default": "Build bundle" },
     { "type": "text", "id": "sticky_link", "label": "Sticky button link", "default": "#bundles" }

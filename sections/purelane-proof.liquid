@@ -1,0 +1,123 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-content.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-proof.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign slide_blocks = section.blocks | where: 'type', 'slide'
+  assign stat_blocks = section.blocks | where: 'type', 'stat'
+  assign anchor_id = section.settings.anchor_id | default: 'proof'
+-%}
+
+<section class="pl-sec pl-proof-section pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="3" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-sec-pad">
+      <div class="pl-proof">
+        <div class="pl-proof-l">
+          {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+          <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.heading_line_1 | escape }}<br>{{ section.settings.heading_line_2 | escape }}</h2>
+          {%- if section.settings.body != blank -%}<p class="pl-body-s" style="max-width:40ch">{{ section.settings.body }}</p>{%- endif -%}
+          {%- if section.settings.cta_label != blank -%}
+            <a class="pl-btn pl-btn--primary" href="{{ section.settings.cta_link | default: '#ingredients' }}">
+              {{ section.settings.cta_label }}
+              {% render 'purelane-icon', name: 'arrow' %}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if slide_blocks.size > 0 -%}
+          <div class="pl-glass-2 pl-rot" data-pl-proof-rot aria-hidden="true">
+            <div class="pl-rot__frame">
+              {%- for block in slide_blocks -%}
+                {%- if block.settings.product != blank -%}
+                  {% render 'purelane-product-media',
+                    product: block.settings.product,
+                    context: 'rot',
+                    slide_name: block.settings.name,
+                    slide_note: block.settings.note,
+                    slide_active: forloop.first
+                  %}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            {%- assign first_slide = slide_blocks.first -%}
+            <div class="pl-rot__cap">
+              <b data-pl-rot-name>{{ first_slide.settings.name | default: first_slide.settings.product.title }}</b>
+              <span data-pl-rot-note>{{ first_slide.settings.note }}</span>
+            </div>
+            <div class="pl-rot__dots" data-pl-rot-dots>
+              {%- for block in slide_blocks -%}
+                <i{% if forloop.first %} class="on"{% endif %}></i>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if stat_blocks.size > 0 -%}
+          <div class="pl-glass-2 pl-stats">
+            {%- for block in stat_blocks -%}
+              <div class="pl-stat" {{ block.shopify_attributes }}>
+                <div class="pl-stat__ring">{{ block.settings.value }}</div>
+                <h5>{{ block.settings.label }}</h5>
+                <p>{{ block.settings.description }}</p>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Proof",
+  "tag": "section",
+  "class": "pl-proof-section",
+  "settings": [
+    { "type": "text", "id": "anchor_id", "label": "Section anchor ID", "default": "proof" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Why it works" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "Tough on grime." },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "Gentle on everything else." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Every formula is built on plant-derived cleansers and essential oils. It behaves exactly like the cleaner you are used to, minus the things you never signed up for." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "See the ingredient list" },
+    { "type": "text", "id": "cta_link", "label": "CTA link", "default": "#ingredients" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Product slide",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "name", "label": "Display name override" },
+        { "type": "text", "id": "note", "label": "Caption", "default": "Foam lifts grease, no scrubbing" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "99.9%" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Germ kill" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Tested against germs and bacteria" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Proof",
+      "blocks": [
+        { "type": "slide", "settings": { "product": "kitchen-cleaner-foaming", "name": "Kitchen cleaner", "note": "Foam lifts grease, no scrubbing" } },
+        { "type": "slide", "settings": { "product": "tap-cleaner-limescale-remover", "name": "Tap & limescale", "note": "Melts hard water stains" } },
+        { "type": "slide", "settings": { "product": "laundry-detergent-non-toxic", "name": "Laundry detergent", "note": "Tough on odour, soft on fabric" } },
+        { "type": "slide", "settings": { "product": "non-toxic-toilet-cleaner", "name": "Toilet cleaner", "note": "Kills 99.9% of germs" } },
+        { "type": "slide", "settings": { "product": "natural-herbal-floor-cleaner", "name": "Floor cleaner", "note": "Neem powered, pet safe" } },
+        { "type": "slide", "settings": { "product": "organic-dishwash-liquid-gel", "name": "Dishwash gel", "note": "Cuts grease, kind to hands" } },
+        { "type": "stat", "settings": { "value": "99.9%", "label": "Germ kill", "description": "Tested against germs and bacteria" } },
+        { "type": "stat", "settings": { "value": "0%", "label": "Sulphates", "description": "No SLS, chlorine or parabens" } },
+        { "type": "stat", "settings": { "value": "100%", "label": "Plant based", "description": "Cleansers derived from plants" } },
+        { "type": "stat", "settings": { "value": "4.8", "label": "Rated", "description": "Across 8,000+ verified reviews" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

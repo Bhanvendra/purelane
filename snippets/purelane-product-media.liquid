@@ -1,8 +1,11 @@
 {%- comment -%}
   Product visual: Shopify featured image when set, else prototype SVG sprite by handle.
   @param product {Product} required
-  @param context {String} hero | stack | shot | tier
+  @param context {String} hero | stack | shot | tier | rot
   @param class {String} extra CSS classes (hero delay: a, b, c)
+  @param slide_name {String} rotator caption name
+  @param slide_note {String} rotator caption note
+  @param slide_active {Boolean} first rotator slide
 {%- endcomment -%}
 
 {%- liquid
@@ -42,6 +45,8 @@
       assign sprite = 'handwash'
     when 'washing-machine-cleaner-descaler'
       assign sprite = 'wm'
+    when 'magic-eraser-sponge'
+      assign sprite = 'eraser'
     when 'bundle-any-2-products'
       assign sprite = 'combo2'
     else
@@ -87,6 +92,14 @@
       <span class="pl-pimg pl-p-{{ sprite }} pl-stack__img" role="img" aria-label="{{ product.title | escape }}"></span>
     {%- when 'tier' -%}
       <span class="pl-pimg pl-p-{{ sprite }} pl-tierpix__img" role="img" aria-label="{{ product.title | escape }}"></span>
+    {%- when 'rot' -%}
+      <span
+        class="pl-pimg pl-p-{{ sprite }}{% if slide_active %} on{% endif %}{% if extra != blank %} {{ extra }}{% endif %}"
+        role="img"
+        aria-label="{{ product.title | escape }}"
+        data-name="{{ slide_name | default: product.title | escape }}"
+        data-note="{{ slide_note | escape }}"
+      ></span>
     {%- else -%}
       <span class="pl-pimg pl-p-{{ sprite }}" role="img" aria-label="{{ product.title | escape }}"></span>
   {%- endcase -%}

@@ -85,6 +85,16 @@ body.template-index .button:not(.pl-btn) {
   z-index: 2;
 }
 
+/* Fixed chrome must sit above scroll sections — hero is 100svh and follows header in DOM */
+.template-index .shopify-section.pl-chrome-header-section {
+  z-index: 100;
+  isolation: isolate;
+}
+
+.template-index .shopify-section.pl-chrome-footer-section {
+  z-index: 90;
+}
+
 /* Purelane sections sit above the fixed scene backdrop */
 .template-index .shopify-section:not(.pl-chrome-header-section):not(.pl-chrome-footer-section) {
   position: relative;

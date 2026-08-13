@@ -31,7 +31,10 @@
   z-index:50;
   padding:0 14px;
   transition:top .4s var(--pl-ease,cubic-bezier(.2,.7,.2,1));
+  pointer-events:none;
 }
+.pl-chrome__hdr > *{pointer-events:auto}
+.pl-ticker{pointer-events:auto}
 .pl-chrome__hdr.up{top:10px}
 .pl-navpill{
   max-width:var(--pl-maxw,1180px);
@@ -60,7 +63,7 @@
 }
 .pl-nav{display:none;gap:26px;margin:0 auto;font-size:13.5px;font-weight:500}
 .pl-nav a{
-  color:var(--pl-paper-2,rgba(236,230,247,.74));padding:6px 0;position:relative;transition:.3s;text-decoration:none;
+  color:var(--pl-paper-2,rgba(236,230,247,.74));padding:6px 0;position:relative;transition:.3s;text-decoration:none;cursor:pointer;
 }
 .pl-nav a::after{
   content:"";position:absolute;left:0;right:100%;bottom:0;height:1.5px;background:var(--pl-accent,#f0a03c);
@@ -115,7 +118,7 @@
 /* ---------- PROGRESS RAIL ---------- */
 .pl-rail{
   position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:44;
-  display:none;flex-direction:column;gap:12px;
+  display:none;flex-direction:column;gap:12px;pointer-events:auto;
 }
 @media(min-width:1180px){.pl-rail{display:flex}}
 .pl-rail a{

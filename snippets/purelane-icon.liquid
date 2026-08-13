@@ -1,0 +1,28 @@
+{%- comment -%}
+  Renders one of a small fixed set of inline SVG icons.
+  Usage: {% render 'purelane-icon', name: 'leaf' %}
+  Keeping this as a single shared snippet (rather than an icon picker app or
+  uploaded image) means the icons stay crisp at any size, inherit currentColor
+  so they follow the theme's colour settings, and add zero extra requests.
+{%- endcomment -%}
+
+{%- case name -%}
+  {%- when 'leaf' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+  {%- when 'shield' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg>
+  {%- when 'spark' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M6.4 17.6 17.6 6.4"/></svg>
+  {%- when 'arrow' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+  {%- when 'check' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+  {%- when 'star' -%}
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.9 6.3 6.9.7-5.2 4.6 1.6 6.8L12 17.6l-6.2 3.4 1.6-6.8-5.2-4.6 6.9-.7L12 2.6Z"/></svg>
+  {%- when 'quote' -%}
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.2 11.5c-1.9 0-3.2-1.4-3.2-3.4C4 5.6 5.9 3.6 8.7 3v1.8c-1.5.5-2.4 1.7-2.4 3 0 .3.1.5.2.8.4-.3.9-.5 1.5-.5 1.4 0 2.4 1 2.4 2.4 0 1.4-1.1 3-3.2 3Zm9 0c-1.9 0-3.2-1.4-3.2-3.4 0-2.5 1.9-4.5 4.7-5.1v1.8c-1.5.5-2.4 1.7-2.4 3 0 .3.1.5.2.8.4-.3.9-.5 1.5-.5 1.4 0 2.4 1 2.4 2.4 0 1.4-1.1 3-3.2 3Z"/></svg>
+  {%- when 'swap' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg>
+  {%- else -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
+{%- endcase -%}

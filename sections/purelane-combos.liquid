@@ -1,0 +1,213 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-combos.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign combo_blocks = section.blocks | where: 'type', 'combo'
+  assign anchor_id = section.settings.anchor_id | default: 'combos'
+-%}
+
+<section class="pl-combos" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+
+    <div class="pl-panel-head">
+      {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="pl-d2" style="margin-top:12px">{{ section.settings.heading }}</h2>{%- endif -%}
+      <div class="pl-rule" aria-hidden="true"><i></i>{% render 'purelane-icon', name: 'leaf' %}<i></i></div>
+      {%- if section.settings.lede != blank -%}<p class="pl-lede" style="margin:14px auto 0">{{ section.settings.lede }}</p>{%- endif -%}
+    </div>
+
+    {%- if combo_blocks.size > 0 -%}
+      <div class="pl-comborail" tabindex="0" aria-label="Best selling combos, scroll for more">
+        {%- for block in combo_blocks -%}
+          {%- assign bundle = block.settings.bundle_product -%}
+          {%- if bundle != blank -%}
+          {%- liquid
+            assign items = block.settings.included_products
+            assign featured = block.settings.featured
+            assign variant = bundle.selected_or_first_available_variant
+            assign item_count = items.size
+            assign titles = ''
+            for p in items
+              if forloop.first
+                assign titles = p.title
+              elsif forloop.last and item_count > 1
+                assign titles = titles | append: ' & ' | append: p.title
+              else
+                assign titles = titles | append: ', ' | append: p.title
+              endif
+            endfor
+          -%}
+          <article class="pl-combo pl-glass{% if featured %} pl-combo--featured{% endif %}" {{ block.shopify_attributes }}>
+            <div class="pl-combo__tray">
+              {%- if variant.compare_at_price > variant.price -%}
+                <span class="pl-combo__save">You save {{ variant.compare_at_price | minus: variant.price | money }}</span>
+              {%- endif -%}
+              {%- if block.settings.flag != blank -%}
+                <span class="pl-combo__flag">{{ block.settings.flag }}</span>
+              {%- endif -%}
+              <div class="pl-stack">
+                {%- for product in items limit: 3 -%}
+                  {%- liquid
+                    assign img = product.featured_image
+                    assign caption = ''
+                    case forloop.index
+                      when 1
+                        assign caption = block.settings.caption_1
+                      when 2
+                        assign caption = block.settings.caption_2
+                      when 3
+                        assign caption = block.settings.caption_3
+                    endcase
+                  -%}
+                  <span class="pl-stack__it">
+                    {%- if img -%}
+                      {{ img | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title, class: 'pl-stack__img' }}
+                    {%- else -%}
+                      <span class="pl-stack__tile">{% render 'purelane-icon', name: 'leaf' %}</span>
+                    {%- endif -%}
+                    <span>{{ caption | default: product.title }}</span>
+                  </span>
+                  {%- unless forloop.last -%}<span class="pl-stack__plus" aria-hidden="true">+</span>{%- endunless -%}
+                {%- endfor -%}
+              </div>
+            </div>
+            <div class="pl-combo__body">
+              <h3>{{ block.settings.title | default: bundle.title }}</h3>
+              <div class="pl-combo__cnt">{{ items.size }} products</div>
+              <p class="pl-combo__inc">
+                {%- if titles != '' -%}Includes: {{ titles }}. {%- endif -%}
+                {{ block.settings.blurb }}
+              </p>
+              <div class="pl-combo__prow">
+                <strong>{{ variant.price | money }}</strong>
+                {%- if variant.compare_at_price > variant.price -%}
+                  <s>{{ variant.compare_at_price | money }}</s>
+                  <em>Save {{ variant.compare_at_price | minus: variant.price | money }}</em>
+                {%- endif -%}
+              </div>
+              <div class="pl-combo__fine">Inclusive of all taxes · COD available</div>
+              <a class="pl-btn {% if featured %}pl-btn--primary{% else %}pl-btn--ghost{% endif %}" href="{{ bundle.url | default: '#' }}">
+                Shop bundle
+                {% render 'purelane-icon', name: 'arrow' %}
+              </a>
+            </div>
+          </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="pl-swipecue" aria-hidden="true">{% render 'purelane-icon', name: 'arrow' %}Swipe for more combos</div>
+      {%- if section.settings.footnote != blank -%}
+        <p class="pl-railnote">{{ section.settings.footnote }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Combos",
+  "tag": "section",
+  "class": "pl-combos-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Section anchor ID",
+      "default": "combos",
+      "info": "Used for in-page links (e.g. #combos)."
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Pre-built to save you money"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best selling combos"
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Supporting text",
+      "default": "Swipe through the boxes people order most. Each one is already priced below buying the same products on their own."
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Footnote below rail",
+      "default": "Tapping \"Shop bundle\" opens the bundle picker with these products already added. You can still swap anything before you pay."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "combo",
+      "name": "Combo",
+      "settings": [
+        {
+          "type": "product",
+          "id": "bundle_product",
+          "label": "Bundle product",
+          "info": "Price, compare-at price and savings shown come from this product, so they always match checkout."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Display title",
+          "info": "Defaults to the bundle product's title if left blank."
+        },
+        {
+          "type": "product_list",
+          "id": "included_products",
+          "label": "Products included (up to 3 shown)",
+          "limit": 3
+        },
+        {
+          "type": "text",
+          "id": "caption_1",
+          "label": "Caption for product 1"
+        },
+        {
+          "type": "text",
+          "id": "caption_2",
+          "label": "Caption for product 2"
+        },
+        {
+          "type": "text",
+          "id": "caption_3",
+          "label": "Caption for product 3"
+        },
+        {
+          "type": "textarea",
+          "id": "blurb",
+          "label": "Extra description",
+          "default": "Everything you need, no need to pick separately."
+        },
+        {
+          "type": "text",
+          "id": "flag",
+          "label": "Ribbon flag (optional)",
+          "info": "e.g. \"Most popular\" or \"Best value\". Leave blank for none."
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Highlight this combo",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Purelane Combos",
+      "blocks": [{ "type": "combo" }, { "type": "combo" }, { "type": "combo" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,140 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-shop-grid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-shop-grid.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign limit = section.settings.products_to_show
+  assign anchor_id = section.settings.anchor_id | default: 'shop'
+-%}
+
+<div class="pl-shop" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-purelane-shop-grid data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+
+    <div class="pl-panel-head">
+      {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="pl-d2" style="margin-top:12px">{{ section.settings.heading }}</h2>{%- endif -%}
+      <div class="pl-rule" aria-hidden="true"><i></i>{% render 'purelane-icon', name: 'leaf' %}<i></i></div>
+    </div>
+
+    {%- if collection != blank and collection.products.size > 0 -%}
+      <div class="pl-shelf">
+        {%- for product in collection.products limit: limit -%}
+          {%- liquid
+            assign img = product.featured_image
+            assign variant = product.selected_or_first_available_variant
+            assign rating = product.metafields.reviews.rating.value.rating
+            assign rating_count = product.metafields.reviews.rating_count.value
+            assign badge = ''
+            if product.tags contains 'Best Seller'
+              assign badge = 'Best seller'
+            elsif product.tags contains 'New'
+              assign badge = 'New'
+            elsif product.tags contains 'Top Rated'
+              assign badge = 'Top rated'
+            endif
+          -%}
+          <article class="pl-card pl-glass" data-product-id="{{ product.id }}">
+            <div class="pl-card__shot">
+              {%- if badge != '' -%}<span class="pl-card__pill">{{ badge }}</span>{%- endif -%}
+              {%- if img -%}
+                {{ img | image_url: width: 400 | image_tag:
+                  loading: 'lazy',
+                  widths: '200,300,400,500',
+                  sizes: '(min-width: 860px) 220px, 45vw',
+                  alt: img.alt | default: product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'pl-placeholder-svg' }}
+              {%- endif -%}
+            </div>
+
+            <h4 class="pl-card__title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h4>
+
+            {%- if rating -%}
+              <div class="pl-card__rate">
+                <b>{% render 'purelane-icon', name: 'star' %} {{ rating }}</b>
+                {%- if rating_count -%}· {{ rating_count }} reviews{%- endif -%}
+              </div>
+            {%- endif -%}
+
+            <div class="pl-card__pr">
+              <strong>{{ variant.price | money }}</strong>
+              {%- if variant.compare_at_price > variant.price -%}
+                <s>{{ variant.compare_at_price | money }}</s>
+                {%- assign pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+                <em>{{ pct }}% off</em>
+              {%- endif -%}
+            </div>
+
+            {%- if variant.available -%}
+              <button
+                type="button"
+                class="pl-btn pl-btn--ghost pl-btn--sm pl-add-btn"
+                data-variant-id="{{ variant.id }}"
+                data-add-to-cart
+              >Add to cart</button>
+            {%- else -%}
+              <button type="button" class="pl-btn pl-btn--ghost pl-btn--sm" disabled>Sold out</button>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="pl-empty pl-glass">
+        <p>{{ 'onboarding.no_content' | t | default: 'Select a collection to show products here.' }}</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Purelane Shop Grid",
+  "tag": "section",
+  "class": "pl-shop-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Section anchor ID",
+      "default": "shop",
+      "info": "Used for in-page links (e.g. #shop)."
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by 30,000 homes"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to display"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Shop Grid"
+    }
+  ]
+}
+{% endschema %}

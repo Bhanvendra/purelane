@@ -1,0 +1,17 @@
+/* Homepage canvas — matches prototype dark ink background on the five Purelane sections. */
+.template-index {
+  background: var(--pl-ink, #17102b);
+  color: var(--pl-paper, #ece6f7);
+}
+
+.template-index .gradient {
+  background: var(--pl-ink, #17102b);
+}
+
+.template-index .content-for-layout {
+  background: var(--pl-ink, #17102b);
+}
+
+.template-index .shopify-section:not([class*='pl-']) {
+  display: none;
+}

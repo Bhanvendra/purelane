@@ -1,0 +1,179 @@
+/* =========================================================
+   Purelane hybrid — LOI colours + typography on prototype layout
+   Keeps: glass, scenes, nav pill, section structure, scroll behaviour
+   Changes: forest-green palette, Cormorant headings, green-tinted scenes
+   Load last on homepage so tokens beat section CSS reloads.
+   ========================================================= */
+
+body.template-index {
+  --pl-brand: #2f4a3a;
+  --pl-brand-dark: #24352b;
+  --pl-accent: #8fd4a8;
+  --pl-accent-2: #5a9e72;
+  --pl-font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --pl-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --pl-g-bg: linear-gradient(
+    158deg,
+    rgba(184, 224, 198, 0.14),
+    rgba(47, 74, 58, 0.22) 58%,
+    rgba(20, 30, 24, 0.3)
+  );
+  --pl-g-line: rgba(184, 224, 198, 0.22);
+  --pl-g-shadow: 0 26px 74px rgba(12, 28, 20, 0.44);
+}
+
+/* Scene backdrop — same structure, greener LOI palette (no flat white) */
+body.template-index .pl-scenes {
+  background: linear-gradient(178deg, #1a3d32 0%, #24352b 45%, #1a2e28 100%);
+}
+
+body.template-index .pl-s1 {
+  background: linear-gradient(178deg, #2a5c48 0%, #1f4a3a 22%, #24352b 55%, #1a3328 100%);
+}
+
+body.template-index .pl-s2 {
+  background: linear-gradient(178deg, #234a3c 0%, #1d4034 30%, #2f4a3a 62%, #182820 100%);
+}
+
+body.template-index .pl-s3 {
+  background: linear-gradient(178deg, #1e4236 0%, #24352b 35%, #1a2e26 68%, #121c18 100%);
+}
+
+body.template-index .pl-s4 {
+  background: linear-gradient(178deg, #182820 0%, #121c18 40%, #0e1612 100%);
+}
+
+/* Typography — LOI serif headings, prototype scale/structure unchanged */
+body.template-index .pl-d1,
+body.template-index .pl-d2,
+body.template-index .pl-d3,
+body.template-index .pl-d4 {
+  font-family: var(--pl-font-serif);
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+body.template-index .pl-d1 {
+  font-size: clamp(42px, 6.5vw, 72px);
+  line-height: 1.04;
+}
+
+body.template-index .pl-d2 {
+  font-size: clamp(32px, 4.2vw, 48px);
+  line-height: 1.06;
+}
+
+body.template-index .pl-kicker {
+  font-family: var(--pl-font-sans);
+  letter-spacing: 0.18em;
+  color: var(--pl-accent);
+  font-weight: 600;
+}
+
+body.template-index .pl-lime {
+  color: #b8e0c6;
+}
+
+/* Buttons — LOI green primary, keep pill shape from prototype */
+body.template-index .pl-btn--primary {
+  background: linear-gradient(135deg, var(--pl-accent-2), var(--pl-brand));
+  color: #f4faf6;
+  box-shadow: 0 12px 30px rgba(36, 53, 43, 0.34);
+}
+
+body.template-index .pl-btn--primary:hover {
+  background: linear-gradient(135deg, var(--pl-brand), var(--pl-brand-dark));
+  box-shadow: 0 18px 40px rgba(36, 53, 43, 0.44);
+}
+
+body.template-index .pl-btn--ghost {
+  border-color: rgba(184, 224, 198, 0.32);
+}
+
+body.template-index .pl-btn--ghost:hover {
+  border-color: var(--pl-accent);
+  color: var(--pl-accent);
+}
+
+/* Hero — keep dark overlay + glass; LOI accent on highlight only */
+body.template-index .pl-hero::before {
+  background: linear-gradient(
+    90deg,
+    rgba(20, 30, 24, 0.72) 0%,
+    rgba(20, 30, 24, 0.28) 55%,
+    transparent 100%
+  );
+}
+
+body.template-index .pl-hero .pl-btn--primary {
+  background: #ffffff;
+  color: var(--pl-brand-dark);
+  box-shadow: 0 12px 30px rgba(12, 28, 20, 0.25);
+}
+
+body.template-index .pl-hero .pl-btn--primary:hover {
+  background: #eef5f0;
+  color: var(--pl-brand-dark);
+}
+
+body.template-index .pl-hero .pl-d1 .pl-lime {
+  color: #c5dcc8;
+}
+
+/* Chrome — keep glass nav pill; green-tinted brand mark */
+body.template-index .pl-brand__mark {
+  background: linear-gradient(150deg, rgba(143, 212, 168, 0.28), rgba(47, 74, 58, 0.42));
+  border-color: rgba(184, 224, 198, 0.24);
+}
+
+body.template-index .pl-brand__mark svg {
+  color: #8fd4a8;
+}
+
+body.template-index .pl-brand__n1 {
+  font-family: var(--pl-font-serif);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+body.template-index .pl-ticker b {
+  color: var(--pl-accent);
+}
+
+body.template-index .pl-rail a.on {
+  background: var(--pl-accent);
+  box-shadow: 0 0 0 5px rgba(143, 212, 168, 0.2);
+}
+
+/* Cards & accents on dark canvas — stay readable (light text on glass) */
+body.template-index .pl-card__pill,
+body.template-index .pl-combo__save,
+body.template-index .pl-combo__flag {
+  background: var(--pl-brand);
+  border-color: var(--pl-brand);
+  color: #f4faf6;
+}
+
+body.template-index .pl-card__rate b,
+body.template-index .pl-revhead .pl-agg b,
+body.template-index .pl-combo__prow em {
+  color: var(--pl-accent);
+}
+
+body.template-index .pl-combo__prow em {
+  background: rgba(143, 212, 168, 0.16);
+  border-color: rgba(143, 212, 168, 0.34);
+}
+
+body.template-index .pl-chrome__dot {
+  background: var(--pl-accent);
+  color: var(--pl-brand-dark);
+}
+
+body.template-index .pl-sticky .pl-btn--primary {
+  background: #ffffff;
+  color: var(--pl-brand-dark);
+}

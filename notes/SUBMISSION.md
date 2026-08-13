@@ -4,7 +4,7 @@ How this theme meets the eight evaluation points from the brief.
 
 ## 1. Pixel-accurate
 
-- Visual system ported from `purelane-homepage.html`: Outfit + Inter, glass surfaces, scroll scenes, prototype tokens in `assets/purelane-base.css`.
+- Visual system: **prototype layout** (glass, scenes, scroll rail, section order) + **LOI hybrid layer** (`assets/purelane-hybrid-loi.css`) for forest-green palette and Cormorant headings.
 - Homepage section order matches prototype scroll: Hero → Reviews → Ingredients → How → Proof → Combos → Bundles → Shop → bonus sections (`templates/index.json`).
 - Hero product stage uses prototype bottle sprites; mobile width `min(88vw, 420px)`.
 - Known intentional delta: full SVG water caustics replaced with CSS scene gradients for Core Web Vitals (same colour story, lighter paint cost).

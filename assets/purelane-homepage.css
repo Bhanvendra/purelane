@@ -12,6 +12,13 @@
   background: var(--pl-ink, #17102b);
 }
 
+/* Keep Dawn header usable on the dark homepage canvas */
+.template-index .header-wrapper,
+.template-index .section-header {
+  position: relative;
+  z-index: 10;
+}
+
 .template-index .shopify-section:not([class*='pl-']) {
   display: none;
 }

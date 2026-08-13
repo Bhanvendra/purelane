@@ -65,7 +65,7 @@
         "anchor_id": "shop",
         "kicker": "Bestsellers",
         "heading": "Loved by 30,000 homes",
-        "collection": "bestsellers",
+        "collection": "all",
         "products_to_show": 8
       }
     },

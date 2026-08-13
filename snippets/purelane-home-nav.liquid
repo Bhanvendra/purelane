@@ -1,0 +1,34 @@
+{%- comment -%}
+  Homepage anchor navigation — avoids 404s from default Dawn menu links
+  (e.g. /pages/contact) before those pages exist in Admin.
+{%- endcomment -%}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    <li>
+      <a href="#top" class="header__menu-item list-menu__item link link--text focus-inset">
+        <span>Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="#shop" class="header__menu-item list-menu__item link link--text focus-inset">
+        <span>Shop</span>
+      </a>
+    </li>
+    <li>
+      <a href="#combos" class="header__menu-item list-menu__item link link--text focus-inset">
+        <span>Combos</span>
+      </a>
+    </li>
+    <li>
+      <a href="#bundles" class="header__menu-item list-menu__item link link--text focus-inset">
+        <span>Bundles</span>
+      </a>
+    </li>
+    <li>
+      <a href="#reviews" class="header__menu-item list-menu__item link link--text focus-inset">
+        <span>Reviews</span>
+      </a>
+    </li>
+  </ul>
+</nav>

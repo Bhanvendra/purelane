@@ -1,4 +1,13 @@
 /* Homepage canvas — prototype dark ink + scene backdrop + Purelane chrome */
+
+/* Dawn .gradient paints a fixed light scheme background over our scenes — kill it */
+body.template-index.gradient {
+  background: var(--pl-ink, #17102b) !important;
+  background-color: var(--pl-ink, #17102b) !important;
+  background-attachment: scroll !important;
+  color: var(--pl-paper, #ece6f7);
+}
+
 body.template-index {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -8,7 +17,7 @@ body.template-index {
 }
 
 .template-index {
-  background: var(--pl-ink, #17102b);
+  background: transparent;
   color: var(--pl-paper, #ece6f7);
   overflow-x: clip;
   padding-bottom: 74px;
@@ -48,8 +57,12 @@ body.template-index .button:not(.pl-btn) {
 }
 
 .template-index .gradient,
-.template-index .content-for-layout {
-  background: transparent;
+.template-index .content-for-layout,
+.template-index .shopify-section,
+.template-index .shopify-section > section,
+.template-index main#MainContent {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* Hide Dawn header/footer on homepage — Purelane chrome sections replace them */

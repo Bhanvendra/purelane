@@ -5,7 +5,7 @@
   z-index:0;
   pointer-events:none;
   overflow:hidden;
-  background:var(--pl-brand,#4b3a8f);
+  background:linear-gradient(178deg,#1ea38d 0%,#0b8578 40%,#4b3a8f 100%);
 }
 .pl-scene{
   position:absolute;
@@ -14,11 +14,15 @@
   transition:opacity 1.5s ease;
 }
 .pl-scene.on{opacity:1}
-.pl-s1{background:linear-gradient(178deg,#1ea38d 0%,#0b8578 22%,#017069 48%,#4b3a8f 74%,#01524e 100%)}
+.pl-s1{background:linear-gradient(178deg,#22b89e 0%,#12a088 18%,#0b8578 38%,#4b3a8f 68%,#01524e 100%)}
 .pl-s2{background:linear-gradient(178deg,#12907f 0%,#04756e 26%,#4b3a8f 58%,#01514d 100%)}
 .pl-s3{background:linear-gradient(178deg,#067c71 0%,#00625d 30%,#014e4a 64%,#023c39 100%)}
 .pl-s4{background:linear-gradient(178deg,#036359 0%,#014b46 32%,#013431 66%,#012422 100%)}
-.pl-waves{position:absolute;inset:-14% -10%;pointer-events:none;overflow:hidden;opacity:.55}
+.pl-waves{position:absolute;inset:-14% -10%;pointer-events:none;overflow:hidden;opacity:.72;transition:opacity 1.2s ease}
+.pl-scenes[data-d="1"] .pl-waves{opacity:.82}
+.pl-scenes[data-d="2"] .pl-waves{opacity:.62}
+.pl-scenes[data-d="3"] .pl-waves{opacity:.46}
+.pl-scenes[data-d="4"] .pl-waves{opacity:.28}
 .pl-waves__layer{position:absolute;inset:0}
 .pl-waves__a{
   background:

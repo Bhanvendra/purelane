@@ -214,9 +214,7 @@
     {%- endif -%}
 
     {%- liquid
-      if request.page_type == 'index'
-        render 'purelane-home-nav'
-      elsif section.settings.menu != blank
+      if section.settings.menu != blank
         if section.settings.menu_type_desktop == 'dropdown'
           render 'header-dropdown-menu'
         elsif section.settings.menu_type_desktop != 'drawer'

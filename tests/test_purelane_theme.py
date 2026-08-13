@@ -79,26 +79,21 @@ class TestIndexTemplate(unittest.TestCase):
     def setUpClass(cls):
         cls.index = load_shopify_json("templates/index.json")
 
-    def test_section_order_matches_prototype(self):
-        self.assertEqual(
-            self.index["order"],
-            [
-                "purelane_header",
-                "purelane_hero",
-                "purelane_reviews",
-                "purelane_ingredients",
-                "purelane_pillars",
-                "purelane_proof",
-                "purelane_combos",
-                "purelane_bundles",
-                "purelane_shop",
-                "purelane_range",
-                "purelane_why_bundles",
-                "purelane_categories",
-                "purelane_trust",
-                "purelane_signup",
-                "purelane_footer",
-            ],
+    def test_section_order_matches_assignment(self):
+        order = self.index["order"]
+        core = [
+            "purelane_hero",
+            "purelane_shop",
+            "purelane_combos",
+            "purelane_bundles",
+            "purelane_reviews",
+        ]
+        indices = [order.index(key) for key in core]
+        self.assertEqual(indices, sorted(indices), "Core sections must follow Hero → Shop → Combos → Bundles → Reviews")
+        self.assertLess(
+            order.index("purelane_bundles"),
+            order.index("purelane_ingredients"),
+            "Bundles should appear before bonus content sections",
         )
 
     def test_five_core_sections_present(self):

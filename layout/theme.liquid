@@ -322,7 +322,7 @@
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
       }
-    </script>
+      </script>
   </head>
 
   <body class="gradient{% if template.name == 'index' %} template-index{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -336,17 +336,17 @@
 
     {% sections 'header-group' %}
 
-    <main
-      id="MainContent"
+      <main
+        id="MainContent"
       class="content-for-layout focus-none"
-      role="main"
+        role="main"
       tabindex="-1"
       data-template="{{ template.name }}"
-    >
-      {{ content_for_layout }}
-    </main>
+      >
+        {{ content_for_layout }}
+      </main>
 
-    {% sections 'footer-group' %}
+        {% sections 'footer-group' %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

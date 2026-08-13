@@ -168,6 +168,15 @@ body.template-index .pl-combo__prow em {
   border-color: rgba(143, 212, 168, 0.34);
 }
 
+body.template-index .pl-badge__icon {
+  border-color: rgba(184, 224, 198, 0.34);
+  color: var(--pl-accent);
+}
+
+body.template-index .pl-chrome__ico {
+  color: #eef5f0;
+}
+
 body.template-index .pl-chrome__dot {
   background: var(--pl-accent);
   color: var(--pl-brand-dark);

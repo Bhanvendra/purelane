@@ -67,6 +67,26 @@
   position:relative;overflow:hidden;
 }
 
+/* Glass shells with inline icons must not clip SVG strokes or circular badges */
+.pl-glass:has(.pl-chrome__ico),
+.pl-glass:has(.pl-brand__mark){
+  overflow:visible;
+  isolation:isolate;
+}
+.pl-glass:has(.pl-chrome__ico)::after,
+.pl-glass:has(.pl-brand__mark)::after{z-index:0}
+.pl-glass:has(.pl-chrome__ico) > *,
+.pl-glass:has(.pl-brand__mark) > *{position:relative;z-index:1}
+.pl-glass-2.pl-badges,
+.pl-badgestrip .pl-glass-2{overflow:visible;isolation:isolate}
+.pl-glass-2.pl-badges > *{position:relative;z-index:1}
+.pl-badge__icon,
+.pl-brand__mark,
+.pl-chrome__ico{overflow:visible}
+.pl-badge__icon svg,
+.pl-brand__mark svg,
+.pl-chrome__ico svg{display:block;overflow:visible}
+
 .pl-btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;
   font-size:12.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;transition:.35s var(--pl-ease);
   white-space:nowrap;border:none;cursor:pointer;font-family:inherit;color:inherit;text-decoration:none}

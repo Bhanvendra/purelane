@@ -42,6 +42,14 @@
   padding:10px 14px;
   border-radius:999px;
 }
+/* Nav pill keeps pl-glass blur but must not clip icon strokes or cart badge */
+.pl-navpill.pl-glass{
+  overflow:visible;
+  border-radius:999px;
+  isolation:isolate;
+}
+.pl-navpill.pl-glass::after{z-index:0}
+.pl-navpill.pl-glass > *{position:relative;z-index:1}
 .pl-brand{display:flex;align-items:center;gap:11px;flex:0 0 auto;text-decoration:none;color:inherit}
 .pl-brand__mark{
   width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;

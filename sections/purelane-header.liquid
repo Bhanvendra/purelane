@@ -38,6 +38,14 @@
       </nav>
 
       <div class="pl-navtools">
+        {%- if section.settings.phone != blank -%}
+          <div class="pl-chrome__cta hide-s">
+            <a class="pl-chrome__phone" href="tel:{{ section.settings.phone | replace: ' ', '' | escape }}">{{ section.settings.phone }}</a>
+            {%- if section.settings.cta_label != blank -%}
+              <a class="pl-btn pl-btn--primary pl-btn--sm" href="{{ section.settings.cta_link | default: '#bundles' }}">{{ section.settings.cta_label }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
         {%- if section.settings.show_search -%}
           <a href="{{ routes.search_url }}" class="pl-chrome__ico hide-s" aria-label="Search">
             {% render 'purelane-icon', name: 'search' %}
@@ -120,6 +128,24 @@
       "id": "show_account",
       "label": "Show account icon",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Header phone number",
+      "default": "+91 9930 123 234"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Header CTA label",
+      "default": "Build bundle"
+    },
+    {
+      "type": "text",
+      "id": "cta_link",
+      "label": "Header CTA link",
+      "default": "#bundles"
     }
   ],
   "blocks": [

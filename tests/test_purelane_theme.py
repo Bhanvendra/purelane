@@ -59,6 +59,7 @@ class TestRequiredFiles(unittest.TestCase):
             "assets/purelane-content.css",
             "assets/purelane-homepage.js",
             "assets/purelane-proof.js",
+            "assets/purelane-loi-theme.css",
         ]:
             self.assertTrue((THEME_ROOT / rel).is_file(), f"Missing {rel}")
 

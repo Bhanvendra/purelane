@@ -38,10 +38,13 @@
       "settings": {
         "brand_name": "Purelane",
         "brand_tagline": "Clean, simply",
-        "show_ticker": true,
-        "show_rail": true,
+        "show_ticker": false,
+        "show_rail": false,
         "show_search": true,
-        "show_account": true
+        "show_account": true,
+        "phone": "+91 9930 123 234",
+        "cta_label": "Build bundle",
+        "cta_link": "#bundles"
       }
     },
     "purelane_hero": {

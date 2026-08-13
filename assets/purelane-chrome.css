@@ -94,8 +94,10 @@
 }
 .pl-chrome__drawer a:hover{background:rgba(236,230,247,.10);color:var(--pl-surface,#faf7fd)}
 
+.pl-chrome__ico.hide-s{display:none}
+@media(min-width:960px){.pl-chrome__ico.hide-s{display:grid}}
+
 @media(max-width:600px){
-  .pl-chrome__ico.hide-s{display:none}
   .pl-brand__mark{width:34px;height:34px}
   .pl-brand__n1{font-size:14.5px}
   .pl-brand__n2{font-size:7.6px;letter-spacing:.2em}

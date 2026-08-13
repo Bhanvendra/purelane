@@ -1,0 +1,161 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-chrome.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign ticker_items = section.blocks | where: 'type', 'ticker_item'
+  assign nav_blocks = section.blocks | where: 'type', 'nav_link'
+-%}
+
+<div class="pl-chrome pl-chrome__header-section" data-section-id="{{ section.id }}">
+  {%- if section.settings.show_ticker -%}
+    <div class="pl-ticker" aria-hidden="true">
+      <div class="pl-ticker__track">
+        {%- for pass in (1..2) -%}
+          {%- for block in ticker_items -%}
+            <span {{ block.shopify_attributes }}>{{ block.settings.text_before }}<b>{{ block.settings.text_bold }}</b>{{ block.settings.text_after }}</span>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <header class="pl-chrome__hdr" id="pl-chrome-hdr">
+    <div class="pl-navpill pl-glass">
+      <a class="pl-brand" href="{{ routes.root_url }}#top" aria-label="{{ shop.name | escape }} home">
+        <span class="pl-brand__mark">
+          {% render 'purelane-icon', name: 'brand' %}
+        </span>
+        <span class="pl-brand__txt">
+          <span class="pl-brand__n1">{{ section.settings.brand_name | default: shop.name }}</span>
+          <span class="pl-brand__n2">{{ section.settings.brand_tagline }}</span>
+        </span>
+      </a>
+
+      <nav class="pl-nav" aria-label="Main">
+        {%- for block in nav_blocks -%}
+          <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endfor -%}
+      </nav>
+
+      <div class="pl-navtools">
+        {%- if section.settings.show_search -%}
+          <a href="{{ routes.search_url }}" class="pl-chrome__ico hide-s" aria-label="Search">
+            {% render 'purelane-icon', name: 'search' %}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.show_account -%}
+          <a href="{{ routes.account_url }}" class="pl-chrome__ico hide-s" aria-label="Account">
+            {% render 'purelane-icon', name: 'account' %}
+          </a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="pl-chrome__ico" id="cart-icon-bubble" aria-label="Cart, {{ cart.item_count }} items">
+          {% render 'purelane-icon', name: 'cart' %}
+          {%- if cart.item_count > 0 -%}
+            <span class="pl-chrome__dot">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+        <button type="button" class="pl-chrome__ico pl-chrome__burger" data-pl-menu-toggle aria-expanded="false" aria-label="Menu">
+          {% render 'purelane-icon', name: 'menu' %}
+        </button>
+      </div>
+    </div>
+
+    <div class="pl-chrome__drawer pl-glass-2" data-pl-menu-drawer>
+      <ul role="list">
+        {%- for block in nav_blocks -%}
+          <li><a href="{{ block.settings.link | default: '#' }}">{{ block.settings.label }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </header>
+
+  {%- if section.settings.show_rail -%}
+    <nav class="pl-rail" aria-label="Section progress">
+      {%- for block in nav_blocks -%}
+        <a href="{{ block.settings.link | default: '#' }}" aria-label="{{ block.settings.label | escape }}"></a>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Purelane Header",
+  "tag": "section",
+  "class": "pl-chrome-header-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "Purelane"
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand tagline",
+      "default": "Clean, simply"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ticker",
+      "label": "Show announcement ticker",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rail",
+      "label": "Show section progress rail (desktop)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ticker_item",
+      "name": "Ticker line",
+      "settings": [
+        { "type": "text", "id": "text_before", "label": "Text before highlight", "default": "Free shipping " },
+        { "type": "text", "id": "text_bold", "label": "Highlighted text", "default": "on every bundle across India" },
+        { "type": "text", "id": "text_after", "label": "Text after highlight" }
+      ]
+    },
+    {
+      "type": "nav_link",
+      "name": "Nav link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Shop" },
+        { "type": "text", "id": "link", "label": "Anchor link", "default": "#shop", "info": "Use #shop, #combos, etc." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Header",
+      "blocks": [
+        { "type": "ticker_item", "settings": { "text_before": "Free shipping ", "text_bold": "on every bundle across India" } },
+        { "type": "ticker_item", "settings": { "text_before": "100% plant-based ", "text_bold": "and non-toxic" } },
+        { "type": "ticker_item", "settings": { "text_before": "Loved by ", "text_bold": "30,000+ happy homes" } },
+        { "type": "ticker_item", "settings": { "text_before": "Buy 3 ", "text_bold": "at flat bundle price" } },
+        { "type": "nav_link", "settings": { "label": "Home", "link": "#top" } },
+        { "type": "nav_link", "settings": { "label": "Shop", "link": "#shop" } },
+        { "type": "nav_link", "settings": { "label": "Combos", "link": "#combos" } },
+        { "type": "nav_link", "settings": { "label": "Bundles", "link": "#bundles" } },
+        { "type": "nav_link", "settings": { "label": "Reviews", "link": "#reviews" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -9,11 +9,47 @@
  */
 {
   "sections": {
+    "purelane_header": {
+      "type": "purelane-header",
+      "blocks": {
+        "ticker_1": {
+          "type": "ticker_item",
+          "settings": { "text_before": "Free shipping ", "text_bold": "on every bundle across India" }
+        },
+        "ticker_2": {
+          "type": "ticker_item",
+          "settings": { "text_before": "100% plant-based ", "text_bold": "and non-toxic" }
+        },
+        "ticker_3": {
+          "type": "ticker_item",
+          "settings": { "text_before": "Loved by ", "text_bold": "30,000+ happy homes" }
+        },
+        "ticker_4": {
+          "type": "ticker_item",
+          "settings": { "text_before": "Buy 3 ", "text_bold": "at flat bundle price" }
+        },
+        "nav_home": { "type": "nav_link", "settings": { "label": "Home", "link": "#top" } },
+        "nav_shop": { "type": "nav_link", "settings": { "label": "Shop", "link": "#shop" } },
+        "nav_combos": { "type": "nav_link", "settings": { "label": "Combos", "link": "#combos" } },
+        "nav_bundles": { "type": "nav_link", "settings": { "label": "Bundles", "link": "#bundles" } },
+        "nav_reviews": { "type": "nav_link", "settings": { "label": "Reviews", "link": "#reviews" } }
+      },
+      "block_order": ["ticker_1", "ticker_2", "ticker_3", "ticker_4", "nav_home", "nav_shop", "nav_combos", "nav_bundles", "nav_reviews"],
+      "settings": {
+        "brand_name": "Purelane",
+        "brand_tagline": "Clean, simply",
+        "show_ticker": true,
+        "show_rail": true,
+        "show_search": true,
+        "show_account": true
+      }
+    },
     "purelane_hero": {
       "type": "purelane-hero",
       "settings": {
         "anchor_id": "top",
-        "heading": "Clean that",
+        "heading_line_1": "Clean",
+        "heading_line_2": "That",
         "highlight_word": "Lasts",
         "lede": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it.",
         "primary_label": "Shop now",
@@ -22,15 +58,15 @@
       "blocks": {
         "badge_1": {
           "type": "badge",
-          "settings": { "icon": "leaf", "label": "Plant powered" }
+          "settings": { "icon": "leaf", "label": "Plant|powered" }
         },
         "badge_2": {
           "type": "badge",
-          "settings": { "icon": "shield", "label": "Safe for kids & pets" }
+          "settings": { "icon": "shield", "label": "Safe for|kids & pets" }
         },
         "badge_3": {
           "type": "badge",
-          "settings": { "icon": "spark", "label": "Zero harsh chemicals" }
+          "settings": { "icon": "spark", "label": "Zero harsh|chemicals" }
         },
         "stage_1": {
           "type": "stage",
@@ -59,15 +95,58 @@
       },
       "block_order": ["badge_1", "badge_2", "badge_3", "stage_1", "stage_2", "stage_3"]
     },
-    "purelane_shop": {
-      "type": "purelane-shop-grid",
+    "purelane_reviews": {
+      "type": "purelane-reviews-rail",
       "settings": {
-        "anchor_id": "shop",
-        "kicker": "Bestsellers",
-        "heading": "Loved by 30,000 homes",
-        "collection": "all",
-        "products_to_show": 8
-      }
+        "anchor_id": "reviews",
+        "kicker": "That's what they said",
+        "aggregate_rating": "4.8",
+        "aggregate_review_count": "8,000+",
+        "aggregate_homes": "12 lakh+"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "heading": "Works like a charm",
+            "quote": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
+            "name": "Anita"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "heading": "Best dishwash ever",
+            "quote": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
+            "name": "Priya"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "heading": "Great product, great packaging",
+            "quote": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
+            "name": "Sunita"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "heading": "Dog friendly",
+            "quote": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
+            "name": "Rohit S."
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "heading": "Sparkling taps again",
+            "quote": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.",
+            "name": "Verified buyer"
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3", "review_4", "review_5"]
     },
     "purelane_combos": {
       "type": "purelane-combos",
@@ -167,65 +246,37 @@
       },
       "block_order": ["tier_1", "tier_2", "tier_3"]
     },
-    "purelane_reviews": {
-      "type": "purelane-reviews-rail",
+    "purelane_shop": {
+      "type": "purelane-shop-grid",
       "settings": {
-        "anchor_id": "reviews",
-        "kicker": "That's what they said",
-        "aggregate_rating": "4.8",
-        "aggregate_review_count": "8,000+",
-        "aggregate_homes": "12 lakh+"
-      },
-      "blocks": {
-        "review_1": {
-          "type": "review",
-          "settings": {
-            "heading": "Works like a charm",
-            "quote": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
-            "name": "Anita"
-          }
-        },
-        "review_2": {
-          "type": "review",
-          "settings": {
-            "heading": "Best dishwash ever",
-            "quote": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
-            "name": "Priya"
-          }
-        },
-        "review_3": {
-          "type": "review",
-          "settings": {
-            "heading": "Great product, great packaging",
-            "quote": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
-            "name": "Sunita"
-          }
-        },
-        "review_4": {
-          "type": "review",
-          "settings": {
-            "heading": "Dog friendly",
-            "quote": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
-            "name": "Rohit S."
-          }
-        },
-        "review_5": {
-          "type": "review",
-          "settings": {
-            "heading": "Sparkling taps again",
-            "quote": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.",
-            "name": "Verified buyer"
-          }
-        }
-      },
-      "block_order": ["review_1", "review_2", "review_3", "review_4", "review_5"]
+        "anchor_id": "shop",
+        "kicker": "Bestsellers",
+        "heading": "Loved by 30,000 homes",
+        "collection": "all",
+        "products_to_show": 8
+      }
+    },
+    "purelane_footer": {
+      "type": "purelane-footer",
+      "settings": {
+        "brand_name": "Purelane",
+        "brand_tagline": "Clean, simply",
+        "blurb": "Effective cleaning, powered by nature. Made for Indian homes since day one.",
+        "show_sticky": true,
+        "sticky_heading": "Pick any 3, pay flat bundle price",
+        "sticky_subheading": "Free shipping, always",
+        "sticky_label": "Build bundle",
+        "sticky_link": "#bundles"
+      }
     }
   },
   "order": [
+    "purelane_header",
     "purelane_hero",
-    "purelane_shop",
+    "purelane_reviews",
     "purelane_combos",
     "purelane_bundles",
-    "purelane_reviews"
+    "purelane_shop",
+    "purelane_footer"
   ]
 }

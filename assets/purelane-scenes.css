@@ -1,0 +1,56 @@
+/* Fixed scroll-driven scene backdrop — matches prototype .scenes / .scene */
+.pl-scenes{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  background:var(--pl-brand,#4b3a8f);
+}
+.pl-scene{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 1.5s ease;
+}
+.pl-scene.on{opacity:1}
+.pl-s1{background:linear-gradient(178deg,#1ea38d 0%,#0b8578 22%,#017069 48%,#4b3a8f 74%,#01524e 100%)}
+.pl-s2{background:linear-gradient(178deg,#12907f 0%,#04756e 26%,#4b3a8f 58%,#01514d 100%)}
+.pl-s3{background:linear-gradient(178deg,#067c71 0%,#00625d 30%,#014e4a 64%,#023c39 100%)}
+.pl-s4{background:linear-gradient(178deg,#036359 0%,#014b46 32%,#013431 66%,#012422 100%)}
+.pl-waves{position:absolute;inset:-14% -10%;pointer-events:none;overflow:hidden;opacity:.55}
+.pl-waves__layer{position:absolute;inset:0}
+.pl-waves__a{
+  background:
+    repeating-linear-gradient(175deg,transparent 0 28px,rgba(230,255,242,.07) 28px 29px,transparent 29px 56px),
+    repeating-linear-gradient(-4deg,transparent 0 42px,rgba(255,255,255,.05) 42px 43px);
+  animation:pl-drift-a 34s linear infinite;
+}
+.pl-waves__b{
+  background:repeating-linear-gradient(178deg,transparent 0 36px,rgba(236,230,247,.06) 36px 38px);
+  opacity:.7;
+  animation:pl-drift-b 23s linear infinite;
+}
+@keyframes pl-drift-a{
+  0%{transform:translate3d(-3%,0,0) scale(1.06)}
+  50%{transform:translate3d(3%,-1.6%,0) scale(1.13)}
+  100%{transform:translate3d(-3%,0,0) scale(1.06)}
+}
+@keyframes pl-drift-b{
+  0%{transform:translate3d(4%,1%,0) scale(1.1)}
+  50%{transform:translate3d(-4%,-1%,0) scale(1.04)}
+  100%{transform:translate3d(4%,1%,0) scale(1.1)}
+}
+.pl-vig{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(126% 86% at 50% 28%,transparent 38%,rgba(1,50,46,.20) 78%,rgba(1,34,32,.44) 100%),
+    linear-gradient(180deg,rgba(1,38,36,.30) 0%,transparent 18%,transparent 66%,rgba(1,32,30,.40) 100%);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .pl-scene{transition:none}
+  .pl-waves__a,.pl-waves__b{animation:none}
+}

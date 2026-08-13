@@ -1,50 +1,58 @@
 {% render 'purelane-styles' %}
 {{ 'purelane-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-hero.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
-  assign heading = section.settings.heading
+  assign heading_line_1 = section.settings.heading_line_1
+  assign heading_line_2 = section.settings.heading_line_2
   assign highlight = section.settings.highlight_word
   assign lede = section.settings.lede
   assign badge_blocks = section.blocks | where: 'type', 'badge'
   assign stage_blocks = section.blocks | where: 'type', 'stage'
+  assign anchor_id = section.settings.anchor_id | default: 'top'
 -%}
-
-{%- assign anchor_id = section.settings.anchor_id | default: 'top' -%}
 
 <section
   class="pl-hero"
   {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %}
+  data-pl-scene="1"
   data-section-id="{{ section.id }}"
 >
   <div class="pl-hero__grid pl-wrap">
 
     {%- if badge_blocks.size > 0 -%}
-    <div class="pl-badges pl-glass-2" aria-label="Product promises">
-      {%- for block in badge_blocks -%}
-        <div class="pl-badge" {{ block.shopify_attributes }}>
-          <span class="pl-badge__icon">{% render 'purelane-icon', name: block.settings.icon %}</span>
-          <span>{{ block.settings.label }}</span>
-        </div>
-      {%- endfor -%}
-    </div>
+      <div class="pl-badges pl-glass-2 pl-rv pl-rv--in" aria-label="Product promises">
+        {%- for block in badge_blocks -%}
+          {%- assign badge_lines = block.settings.label | split: '|' -%}
+          <div class="pl-badge" {{ block.shopify_attributes }}>
+            <span class="pl-badge__icon">{% render 'purelane-icon', name: block.settings.icon %}</span>
+            <span>
+              {%- for line in badge_lines -%}
+                {%- unless forloop.first -%}<br>{%- endunless -%}{{ line | strip }}
+              {%- endfor -%}
+            </span>
+          </div>
+        {%- endfor -%}
+      </div>
     {%- endif -%}
 
     <div class="pl-hero__copy">
-      <h1 class="pl-d1">
-        {{ heading }}{% if highlight != blank %} <span class="pl-lime">{{ highlight }}</span>{% endif %}
+      <h1 class="pl-d1 pl-rv pl-rv--in">
+        {{ heading_line_1 | escape }}{%- if heading_line_2 != blank -%}<br>{{ heading_line_2 | escape }}{%- endif -%}
+        {%- if highlight != blank -%}<br><span class="pl-lime">{{ highlight | escape }}</span>{%- endif -%}
       </h1>
 
-      <div class="pl-rule" aria-hidden="true">
+      <div class="pl-rule pl-rv pl-rv--d1" aria-hidden="true">
         <i></i>
         {% render 'purelane-icon', name: 'leaf' %}
         <i></i>
       </div>
 
       {%- if lede != blank -%}
-        <p class="pl-lede">{{ lede }}</p>
+        <p class="pl-lede pl-rv pl-rv--d2">{{ lede }}</p>
       {%- endif -%}
 
-      <div class="pl-hero__cta">
+      <div class="pl-hero__cta pl-rv pl-rv--d3">
         {%- if section.settings.primary_label != blank -%}
           <a class="pl-btn pl-btn--primary" href="{{ section.settings.primary_link | default: '#shop' }}">
             {{ section.settings.primary_label }}
@@ -59,123 +67,76 @@
       </div>
 
       {%- if badge_blocks.size > 0 -%}
-      <div class="pl-badgestrip">
-        {%- for block in badge_blocks -%}
-          <div class="pl-glass-2">
-            {% render 'purelane-icon', name: block.settings.icon %}
-            {{ block.settings.label }}
-          </div>
-        {%- endfor -%}
-      </div>
+        <div class="pl-badgestrip pl-rv pl-rv--d4">
+          {%- for block in badge_blocks -%}
+            <div class="pl-glass-2">
+              {% render 'purelane-icon', name: block.settings.icon %}
+              {{ block.settings.label | split: '|' | first | strip }}
+            </div>
+          {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
 
     {%- if stage_blocks.size > 0 -%}
-    <div class="pl-hero__prod" id="pl-heroProd-{{ section.id }}">
-      <div class="pl-hstage" id="pl-hstage-{{ section.id }}">
-        {%- for block in stage_blocks -%}
-          {%- liquid
-            assign products = block.settings.products
-            assign bundle_product = block.settings.bundle_product
-            assign is_first = forloop.first
-          -%}
-          <div class="pl-hslide{% if is_first %} on{% endif %}" data-n="{{ forloop.index }}" {{ block.shopify_attributes }}>
-            {%- for product in products limit: 3 -%}
-              {%- liquid
-                assign img = product.featured_image
-                assign delay_class = 'd1'
-                if forloop.index == 2
-                  assign delay_class = 'd2'
-                elsif forloop.index == 3
-                  assign delay_class = 'd3'
-                endif
-              -%}
-              {%- if img -%}
-                <span
-                  class="pl-hp {{ delay_class }}"
-                  role="img"
-                  aria-label="{{ img.alt | default: product.title | escape }}"
-                  style="--pl-img:url({{ img | image_url: width: 700 }}); aspect-ratio:{{ img.aspect_ratio | default: 0.5 }};"
-                ></span>
-              {%- else -%}
-                <span class="pl-hp pl-hp--placeholder {{ delay_class }}" role="img" aria-label="{{ product.title | escape }}">
-                  {{ 'product-1' | placeholder_svg_tag: 'pl-placeholder-svg' }}
-                </span>
-              {%- endif -%}
-            {%- endfor -%}
+      <div class="pl-hero__prod pl-rv pl-rv--d2" id="pl-heroProd-{{ section.id }}">
+        <div class="pl-hstage" id="pl-hstage-{{ section.id }}">
+          {%- for block in stage_blocks -%}
+            {%- liquid
+              assign products = block.settings.products
+              assign bundle_product = block.settings.bundle_product
+              assign slide_class = 'pl-hs' | append: forloop.index
+            -%}
+            <div class="pl-hslide {{ slide_class }}{% if forloop.first %} on{% endif %}" data-n="{{ forloop.index }}" {{ block.shopify_attributes }}>
+              {%- for product in products limit: 3 -%}
+                {%- liquid
+                  assign delay_class = 'a'
+                  if forloop.index == 2
+                    assign delay_class = 'b'
+                  elsif forloop.index == 3
+                    assign delay_class = 'c'
+                  endif
+                -%}
+                {% render 'purelane-product-media', product: product, context: 'hero', class: delay_class %}
+              {%- endfor -%}
 
-            {%- if bundle_product != blank -%}
-              {%- liquid
-                assign variant = bundle_product.selected_or_first_available_variant
-              -%}
-              <div class="pl-glass-2 pl-ptag">
-                <span class="pl-lbl">{{ block.settings.label | default: bundle_product.title }}</span>
-                <span class="pl-val">
-                  <strong>{{ variant.price | money }}</strong>
+              {%- if bundle_product != blank -%}
+                {%- assign variant = bundle_product.selected_or_first_available_variant -%}
+                <div class="pl-glass-2 pl-ptag">
+                  <span class="pl-lbl">{{ block.settings.label | default: bundle_product.title }}</span>
+                  <span class="pl-val">
+                    <strong>{{ variant.price | money }}</strong>
+                    {%- if variant.compare_at_price > variant.price -%}
+                      <s>{{ variant.compare_at_price | money }}</s>
+                    {%- endif -%}
+                  </span>
                   {%- if variant.compare_at_price > variant.price -%}
-                    <s>{{ variant.compare_at_price | money }}</s>
+                    {%- assign savings = variant.compare_at_price | minus: variant.price -%}
+                    {%- assign pct = savings | times: 100 | divided_by: variant.compare_at_price -%}
+                    {%- if forloop.index == 1 and pct > 0 -%}
+                      <span class="pl-cut">{{ pct }}% off</span>
+                    {%- else -%}
+                      <span class="pl-cut">Save {{ savings | money }}</span>
+                    {%- endif -%}
                   {%- endif -%}
-                </span>
-                {%- if variant.compare_at_price > variant.price -%}
-                  <span class="pl-cut">Save {{ variant.compare_at_price | minus: variant.price | money }}</span>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
 
-      {%- if stage_blocks.size > 1 -%}
-      <div class="pl-hdots" id="pl-hdots-{{ section.id }}" role="tablist" aria-label="Product bundle preview">
-        {%- for block in stage_blocks -%}
-          <button type="button" class="{% if forloop.first %}on{% endif %}" role="tab" aria-selected="{{ forloop.first }}" aria-label="Show {{ forloop.index }} product{% if forloop.index != 1 %}s{% endif %}"></button>
-        {%- endfor -%}
+        {%- if stage_blocks.size > 1 -%}
+          <div class="pl-hdots" role="tablist" aria-label="Product bundle preview">
+            {%- for block in stage_blocks -%}
+              <button type="button" class="{% if forloop.first %}on{% endif %}" role="tab" aria-selected="{{ forloop.first }}" aria-label="Show {{ forloop.index }} product{% if forloop.index != 1 %}s{% endif %}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
-      {%- endif -%}
-    </div>
     {%- endif -%}
 
   </div>
 </section>
-
-<script>
-  (function () {
-    var root = document.querySelector('.pl-hero[data-section-id="{{ section.id }}"]');
-    if (!root) return;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var stage = document.getElementById('pl-hstage-{{ section.id }}');
-    if (!stage) return;
-    var slides = [].slice.call(stage.querySelectorAll('.pl-hslide'));
-    var dotsWrap = document.getElementById('pl-hdots-{{ section.id }}');
-    var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('button')) : [];
-    var i = 0, timer = null;
-
-    function go(n) {
-      i = (n + slides.length) % slides.length;
-      slides.forEach(function (s, idx) { s.classList.toggle('on', idx === i); });
-      dots.forEach(function (d, idx) {
-        d.classList.toggle('on', idx === i);
-        d.setAttribute('aria-selected', idx === i);
-      });
-    }
-    function play() { if (!timer && !reduce && slides.length > 1) timer = setInterval(function () { go(i + 1); }, 3800); }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-
-    dots.forEach(function (d, idx) {
-      d.addEventListener('click', function () { stop(); go(idx); play(); });
-    });
-    stage.addEventListener('mouseenter', stop);
-    stage.addEventListener('mouseleave', play);
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { e.isIntersecting ? play() : stop(); });
-      }, { threshold: 0.2 }).observe(stage);
-    } else {
-      play();
-    }
-  })();
-</script>
 
 {% schema %}
 {
@@ -192,9 +153,15 @@
     },
     {
       "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Clean that"
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Clean"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "That"
     },
     {
       "type": "text",
@@ -251,7 +218,8 @@
           "type": "text",
           "id": "label",
           "label": "Label",
-          "default": "Plant powered"
+          "default": "Plant powered",
+          "info": "Use | for a line break in the desktop badge rail (e.g. Plant|powered)."
         }
       ]
     },
@@ -275,7 +243,7 @@
           "type": "product",
           "id": "bundle_product",
           "label": "Product to price this stage from",
-          "info": "Price and compare-at price shown on the tag come from this product's price, so the hero always reflects real Shopify pricing."
+          "info": "Price and compare-at price shown on the tag come from this product's price."
         }
       ]
     }
@@ -285,9 +253,9 @@
     {
       "name": "Purelane Hero",
       "blocks": [
-        { "type": "badge", "settings": { "icon": "leaf", "label": "Plant powered" } },
-        { "type": "badge", "settings": { "icon": "shield", "label": "Safe for kids & pets" } },
-        { "type": "badge", "settings": { "icon": "spark", "label": "Zero harsh chemicals" } },
+        { "type": "badge", "settings": { "icon": "leaf", "label": "Plant|powered" } },
+        { "type": "badge", "settings": { "icon": "shield", "label": "Safe for|kids & pets" } },
+        { "type": "badge", "settings": { "icon": "spark", "label": "Zero harsh|chemicals" } },
         { "type": "stage", "settings": { "label": "Single bottle" } },
         { "type": "stage", "settings": { "label": "Any 2 products" } },
         { "type": "stage", "settings": { "label": "Any 3 products" } }

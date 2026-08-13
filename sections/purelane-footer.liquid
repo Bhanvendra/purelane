@@ -1,0 +1,104 @@
+{% render 'purelane-styles' %}
+{{ 'purelane-chrome.css' | asset_url | stylesheet_tag }}
+
+<footer class="pl-chrome pl-chrome__footer" data-pl-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-fgrid">
+      <div class="pl-fcol">
+        <a class="pl-brand" href="{{ routes.root_url }}#top" style="margin-bottom:16px">
+          <span class="pl-brand__mark">{% render 'purelane-icon', name: 'brand' %}</span>
+          <span class="pl-brand__txt">
+            <span class="pl-brand__n1">{{ section.settings.brand_name | default: shop.name }}</span>
+            <span class="pl-brand__n2">{{ section.settings.brand_tagline }}</span>
+          </span>
+        </a>
+        {%- if section.settings.blurb != blank -%}
+          <p style="max-width:30ch">{{ section.settings.blurb }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.shop_heading != blank -%}
+        <div class="pl-fcol">
+          <h5>{{ section.settings.shop_heading }}</h5>
+          {%- if section.settings.shop_link_1_label != blank -%}<a href="{{ section.settings.shop_link_1_url | default: '#shop' }}">{{ section.settings.shop_link_1_label }}</a>{%- endif -%}
+          {%- if section.settings.shop_link_2_label != blank -%}<a href="{{ section.settings.shop_link_2_url | default: '#shop' }}">{{ section.settings.shop_link_2_label }}</a>{%- endif -%}
+          {%- if section.settings.shop_link_3_label != blank -%}<a href="{{ section.settings.shop_link_3_url | default: '#bundles' }}">{{ section.settings.shop_link_3_label }}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.about_heading != blank -%}
+        <div class="pl-fcol">
+          <h5>{{ section.settings.about_heading }}</h5>
+          {%- if section.settings.about_link_1_label != blank -%}<a href="{{ section.settings.about_link_1_url | default: '#reviews' }}">{{ section.settings.about_link_1_label }}</a>{%- endif -%}
+          {%- if section.settings.about_link_2_label != blank -%}<a href="{{ section.settings.about_link_2_url | default: '#reviews' }}">{{ section.settings.about_link_2_label }}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.contact_heading != blank -%}
+        <div class="pl-fcol">
+          <h5>{{ section.settings.contact_heading }}</h5>
+          {%- if section.settings.email != blank -%}<a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>{%- endif -%}
+          {%- if section.settings.phone != blank -%}<a href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a>{%- endif -%}
+          {%- if section.settings.company != blank -%}<p style="font-size:12px;color:rgba(236,230,247,.5)">{{ section.settings.company }}</p>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pl-fbot">
+      <span>{{ section.settings.copyright }}</span>
+      <span>{{ section.settings.legal_links }}</span>
+    </div>
+  </div>
+
+  {%- if section.settings.show_sticky -%}
+    <div class="pl-sticky">
+      <span class="pl-sticky__lbl">
+        <b>{{ section.settings.sticky_heading }}</b>
+        <span>{{ section.settings.sticky_subheading }}</span>
+      </span>
+      <a class="pl-btn pl-btn--primary pl-btn--sm" href="{{ section.settings.sticky_link | default: '#bundles' }}">
+        {{ section.settings.sticky_label }}
+        {% render 'purelane-icon', name: 'arrow' %}
+      </a>
+    </div>
+  {%- endif -%}
+</footer>
+
+{% schema %}
+{
+  "name": "Purelane Footer",
+  "tag": "section",
+  "class": "pl-chrome-footer-section",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Purelane" },
+    { "type": "text", "id": "brand_tagline", "label": "Brand tagline", "default": "Clean, simply" },
+    { "type": "textarea", "id": "blurb", "label": "Brand blurb", "default": "Effective cleaning, powered by nature. Made for Indian homes since day one." },
+    { "type": "text", "id": "shop_heading", "label": "Shop column heading", "default": "Shop" },
+    { "type": "text", "id": "shop_link_1_label", "label": "Shop link 1", "default": "Bestsellers" },
+    { "type": "text", "id": "shop_link_1_url", "label": "Shop link 1 URL", "default": "#shop" },
+    { "type": "text", "id": "shop_link_2_label", "label": "Shop link 2", "default": "Combos" },
+    { "type": "text", "id": "shop_link_2_url", "label": "Shop link 2 URL", "default": "#combos" },
+    { "type": "text", "id": "shop_link_3_label", "label": "Shop link 3", "default": "Bundles" },
+    { "type": "text", "id": "shop_link_3_url", "label": "Shop link 3 URL", "default": "#bundles" },
+    { "type": "text", "id": "about_heading", "label": "About column heading", "default": "About" },
+    { "type": "text", "id": "about_link_1_label", "label": "About link 1", "default": "Reviews" },
+    { "type": "text", "id": "about_link_1_url", "label": "About link 1 URL", "default": "#reviews" },
+    { "type": "text", "id": "about_link_2_label", "label": "About link 2", "default": "How bundles work" },
+    { "type": "text", "id": "about_link_2_url", "label": "About link 2 URL", "default": "#bundles" },
+    { "type": "text", "id": "contact_heading", "label": "Contact column heading", "default": "Get in touch" },
+    { "type": "text", "id": "email", "label": "Email", "default": "hello@purelane.com" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "+91 9930 123 234" },
+    { "type": "text", "id": "company", "label": "Company name", "default": "Purelane Eco Products Pvt Ltd" },
+    { "type": "text", "id": "copyright", "label": "Copyright", "default": "© 2026 Purelane Eco Products Private Limited" },
+    { "type": "text", "id": "legal_links", "label": "Legal links text", "default": "Privacy · Terms · Refunds · Contact" },
+    { "type": "header", "content": "Mobile sticky CTA" },
+    { "type": "checkbox", "id": "show_sticky", "label": "Show sticky bundle CTA on mobile", "default": true },
+    { "type": "text", "id": "sticky_heading", "label": "Sticky heading", "default": "Pick any 3, pay flat bundle price" },
+    { "type": "text", "id": "sticky_subheading", "label": "Sticky subheading", "default": "Free shipping, always" },
+    { "type": "text", "id": "sticky_label", "label": "Sticky button label", "default": "Build bundle" },
+    { "type": "text", "id": "sticky_link", "label": "Sticky button link", "default": "#bundles" }
+  ],
+  "presets": [{ "name": "Purelane Footer" }]
+}
+{% endschema %}

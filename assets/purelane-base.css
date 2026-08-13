@@ -80,6 +80,18 @@
 
 .pl-placeholder-svg{width:60%;height:60%;margin:auto;opacity:.5;display:block}
 
+/* Scroll reveal — matches prototype .rv */
+.pl-rv{
+  opacity:0;transform:translateY(30px);filter:blur(7px);
+  transition:opacity .95s var(--pl-ease),transform .95s var(--pl-ease),filter .95s var(--pl-ease);
+}
+.pl-rv--in{opacity:1;transform:none;filter:none}
+.pl-rv--d1{transition-delay:.09s}
+.pl-rv--d2{transition-delay:.18s}
+.pl-rv--d3{transition-delay:.27s}
+.pl-rv--d4{transition-delay:.36s}
+
 @media (prefers-reduced-motion: reduce){
   .pl-btn, .pl-btn--primary:hover, .pl-btn--ghost:hover { transition:none; transform:none; }
+  .pl-rv{opacity:1;transform:none;filter:none;transition:none}
 }

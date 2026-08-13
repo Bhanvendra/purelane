@@ -6,62 +6,66 @@
 |------|-------|
 | Dev store | `https://purelane-gkiia8sy.myshopify.com` |
 | Theme base | **Stock Dawn 16.0.0** |
-| Homepage template | `templates/index.json` (five Purelane sections only) |
+| Homepage template | `templates/index.json` |
 | Product seed file | `notes/products-import.csv` (16 products) |
 
-## What's here
+## Assignment scope (five sections)
 
-Five self-contained sections on stock Dawn, each with schema, CSS, and shared tokens:
+| # | Section | File | Anchor |
+|---|---------|------|--------|
+| 01 | Hero | `sections/purelane-hero.liquid` | `#top` |
+| 02 | Shop grid | `sections/purelane-shop-grid.liquid` | `#shop` |
+| 03 | Combos | `sections/purelane-combos.liquid` | `#combos` |
+| 04 | Bundles | `sections/purelane-bundles.liquid` | `#bundles` |
+| 05 | Reviews rail | `sections/purelane-reviews-rail.liquid` | `#reviews` |
+
+Homepage order matches the prototype scroll: **Hero → Reviews → Combos → Bundles → Shop**, wrapped in Purelane header/footer chrome sections.
+
+## Shared assets
 
 ```
-sections/purelane-hero.liquid
-sections/purelane-shop-grid.liquid
-sections/purelane-combos.liquid
-sections/purelane-bundles.liquid
-sections/purelane-reviews-rail.liquid
-snippets/purelane-styles.liquid
-snippets/purelane-icon.liquid
-assets/purelane-base.css (+ per-section CSS)
-assets/purelane-shop-grid.js
-assets/purelane-homepage.css
+snippets/purelane-styles.liquid       — fonts + base tokens (loaded once)
+snippets/purelane-icon.liquid         — inline SVG icons
+snippets/purelane-product-media.liquid — product image OR prototype sprite fallback
+snippets/purelane-scenes.liquid       — fixed gradient backdrop + wave overlay
+assets/purelane-base.css              — design tokens, glass, buttons, reveal
+assets/purelane-product-sprites.css   — prototype bottle illustrations (base64 SVG)
+assets/purelane-scenes.css            — scroll-driven scene gradients
+assets/purelane-chrome.css            — ticker, nav, footer, sticky CTA
+assets/purelane-homepage.css          — hides Dawn header/footer on index
+assets/purelane-homepage.js           — scenes, reveal, progress rail, mobile menu
+assets/purelane-hero.js               — hero product-stage carousel
+assets/purelane-shop-grid.js          — quick add-to-cart via Dawn cart drawer
 ```
 
-## Metafields / metaobjects
+## Real Shopify data (no hardcoded prices in Liquid)
 
-**None created.** The theme uses:
+- All prices, compare-at, savings, and `% off` come from product/variant fields.
+- Shop badges from product **tags** (`Best Seller`, `New`, `Top Rated`).
+- Star ratings from `product.metafields.reviews.rating` when a reviews app populates them.
+- Aggregate rating strip uses section **settings** (no native store-wide rating field).
+- Product visuals: featured image when uploaded; otherwise prototype sprite matched by handle via `purelane-product-media.liquid`.
 
-- Product **tags** for shop-grid badges (`Best Seller`, `New`, `Top Rated`)
-- Standard **`reviews.rating`** and **`reviews.rating_count`** product metafields (Shopify Reviews / compatible apps)
-- Section **settings** for aggregate rating copy (no native store-wide rating field)
+## Production fixes vs prototype HTML
 
-See `notes/METAFIELDS.md` for details.
+| Prototype | Theme change | Why |
+|-----------|--------------|-----|
+| Inline `<script>` on `<body>` | External `purelane-*.js` with `shopify:section:load` hooks | Theme editor safety |
+| Hardcoded ₹ in HTML | `{{ variant.price \| money }}` | Merchant currency / price updates |
+| `#voices` nav target | `#reviews` | Prototype anchor mismatch |
+| Full water SVG + bubble parallax | CSS wave layers + 4-scene gradient crossfade | Core Web Vitals; same visual intent |
+| Page-level `<header>` in HTML | `purelane-header` / `purelane-footer` sections | Merchant-editable chrome on Dawn |
+| Duplicate marquee HTML | One block set rendered twice (`aria-hidden` on copy) | Theme editor + a11y |
 
-## What I'd flag about the original file
+## Tests
 
-- Single 1,700-line HTML with inline base64 “photos”, hardcoded ₹ prices, and hand-written combo copy — most of the work is deciding what becomes Shopify data vs merchant copy.
-- Page-level cinematic effects (scroll scene crossfade, water SVGs, bubbles, cursor parallax) live on `<body>`, not in reusable sections — left out intentionally for performance and theme-editor safety.
-- Nav link `#voices` in the prototype does not match the reviews section (`id="reviews"`). Built against `#reviews`.
-
-## What I changed in the code, and why
-
-- **Real Shopify products** for every price, image, and title via `product` / `product_list` settings; savings computed from `compare_at_price - price`.
-- **Add to cart** posts to Dawn's `/cart/add.js`, publishes `PUB_SUB_EVENTS.cartUpdate`, and refreshes the cart drawer.
-- **Sold out / no image / long title** handled in shop grid (`variant.available`, placeholder SVG, `-webkit-line-clamp`).
-- **Reviews marquee** renders blocks twice (second pass `aria-hidden`) for seamless scroll without duplicate editor entries.
-- **Homepage shell** (`purelane-homepage.css`) sets dark `--pl-ink` canvas and hides default Dawn homepage sections so only the five Purelane blocks show.
-- **Migrated base theme** from Horizon → stock Dawn per assignment brief.
-
-## What I'd do with more time
-
-- Wire aggregate rating to a reviews app's store-wide metafield when available.
-- Shopify Functions discount for bundle tiers so flat bundle pricing is enforced at checkout.
-- Percy/Playwright snapshot tests at 375 / 768 / 1024 / 1440px against `purelane-homepage.html`.
-- Optional page-shell header/footer from the prototype (bonus scope).
+```bash
+python -m unittest tests.test_purelane_theme -v
+```
 
 ## Setup checklist
 
 1. Import `notes/products-import.csv` (Products → Import).
-2. Confirm collection **Bestsellers** exists and contains the seeded products.
-3. Push theme: `shopify theme push --store purelane-gkiia8sy.myshopify.com`
-4. Theme editor → Homepage → verify product picks resolved (handles in `index.json`).
-5. Visual QA from 375px up against the prototype file.
+2. Push theme: `shopify theme push --store purelane-gkiia8sy.myshopify.com`
+3. Theme editor → Homepage → confirm product picks resolve (handles in `index.json`).
+4. Visual QA at 375 / 768 / 1024 / 1440px against `purelane-homepage.html` and screenshots.

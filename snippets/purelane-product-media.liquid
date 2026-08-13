@@ -1,0 +1,104 @@
+{%- comment -%}
+  Product visual: Shopify featured image when set, else prototype SVG sprite by handle.
+  @param product {Product} required
+  @param context {String} hero | stack | shot | tier
+  @param class {String} extra CSS classes (hero delay: a, b, c)
+{%- endcomment -%}
+
+{%- liquid
+  assign img = product.featured_image
+  assign ctx = context | default: 'shot'
+  assign extra = class | default: ''
+  assign sprite = ''
+
+  case product.handle
+    when 'kitchen-cleaner-foaming'
+      if ctx == 'hero'
+        assign sprite = 'kbtl'
+      else
+        assign sprite = 'kitchen'
+      endif
+    when 'tap-cleaner-limescale-remover'
+      if ctx == 'hero'
+        assign sprite = 'tbtl'
+      else
+        assign sprite = 'tap'
+      endif
+    when 'copper-bronze-brass-cleaner'
+      if ctx == 'hero'
+        assign sprite = 'mbtl'
+      else
+        assign sprite = 'metal'
+      endif
+    when 'organic-dishwash-liquid-gel'
+      assign sprite = 'dish'
+    when 'laundry-detergent-non-toxic'
+      assign sprite = 'laundry'
+    when 'natural-herbal-floor-cleaner'
+      assign sprite = 'floor'
+    when 'non-toxic-toilet-cleaner'
+      assign sprite = 'toilet'
+    when 'gentle-hydrating-liquid-handwash'
+      assign sprite = 'handwash'
+    when 'washing-machine-cleaner-descaler'
+      assign sprite = 'wm'
+    when 'bundle-any-2-products'
+      assign sprite = 'combo2'
+    else
+      if product.handle contains 'kitchen'
+        assign sprite = 'kitchen'
+      elsif product.handle contains 'tap' or product.handle contains 'limescale'
+        assign sprite = 'tap'
+      elsif product.handle contains 'floor'
+        assign sprite = 'floor'
+      elsif product.handle contains 'laundry'
+        assign sprite = 'laundry'
+      elsif product.handle contains 'toilet'
+        assign sprite = 'toilet'
+      elsif product.handle contains 'handwash'
+        assign sprite = 'handwash'
+      elsif product.handle contains 'dish'
+        assign sprite = 'dish'
+      endif
+  endcase
+-%}
+
+{%- if img -%}
+  {%- case ctx -%}
+    {%- when 'hero' -%}
+      <span
+        class="pl-hp pl-pimg {{ extra }}"
+        role="img"
+        aria-label="{{ img.alt | default: product.title | escape }}"
+        style="--pl-img:url({{ img | image_url: width: 700 }}); --pl-ar:{{ img.aspect_ratio | default: 0.32 }};"
+      ></span>
+    {%- when 'stack' -%}
+      {{ img | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title, class: 'pl-stack__img' }}
+    {%- when 'tier' -%}
+      {{ img | image_url: width: 160 | image_tag: loading: 'lazy', alt: '', class: 'pl-tierpix__img' }}
+    {%- else -%}
+      {{ img | image_url: width: 400 | image_tag: loading: 'lazy', alt: img.alt | default: product.title, class: 'pl-pimg' }}
+  {%- endcase -%}
+{%- elsif sprite != blank -%}
+  {%- case ctx -%}
+    {%- when 'hero' -%}
+      <span class="pl-hp pl-pimg pl-p-{{ sprite }} {{ extra }}" role="img" aria-label="{{ product.title | escape }}"></span>
+    {%- when 'stack' -%}
+      <span class="pl-pimg pl-p-{{ sprite }} pl-stack__img" role="img" aria-label="{{ product.title | escape }}"></span>
+    {%- when 'tier' -%}
+      <span class="pl-pimg pl-p-{{ sprite }} pl-tierpix__img" role="img" aria-label="{{ product.title | escape }}"></span>
+    {%- else -%}
+      <span class="pl-pimg pl-p-{{ sprite }}" role="img" aria-label="{{ product.title | escape }}"></span>
+  {%- endcase -%}
+{%- else -%}
+  {%- case ctx -%}
+    {%- when 'stack' -%}
+      <span class="pl-stack__tile">{% render 'purelane-icon', name: 'leaf' %}</span>
+    {%- when 'hero' -%}
+      <span class="pl-hp pl-hp--placeholder {{ extra }}" role="img" aria-label="{{ product.title | escape }}">
+        {{ 'product-1' | placeholder_svg_tag: 'pl-placeholder-svg' }}
+      </span>
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'pl-placeholder-svg' }}
+  {%- endcase -%}
+{%- endif -%}

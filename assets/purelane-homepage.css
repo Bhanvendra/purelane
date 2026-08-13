@@ -1,24 +1,53 @@
-/* Homepage canvas — matches prototype dark ink background on the five Purelane sections. */
+/* Homepage canvas — prototype dark ink + scene backdrop + Purelane chrome */
 .template-index {
   background: var(--pl-ink, #17102b);
   color: var(--pl-paper, #ece6f7);
+  overflow-x: clip;
+  padding-bottom: 74px;
+  -webkit-font-smoothing: antialiased;
 }
 
-.template-index .gradient {
-  background: var(--pl-ink, #17102b);
+@media (min-width: 960px) {
+  .template-index {
+    padding-bottom: 0;
+  }
+}
+
+.template-index .gradient,
+.template-index .content-for-layout {
+  background: transparent;
+}
+
+/* Hide Dawn header/footer on homepage — Purelane chrome sections replace them */
+.template-index .shopify-section-group-header-group,
+.template-index .shopify-section-group-footer-group,
+.template-index [id^='shopify-section-group-header'],
+.template-index [id^='shopify-section-group-footer'] {
+  display: none !important;
 }
 
 .template-index .content-for-layout {
-  background: var(--pl-ink, #17102b);
-}
-
-/* Keep Dawn header usable on the dark homepage canvas */
-.template-index .header-wrapper,
-.template-index .section-header {
   position: relative;
-  z-index: 10;
+  z-index: 2;
 }
 
-.template-index .shopify-section:not([class*='pl-']) {
-  display: none;
+.template-index .shopify-section.pl-chrome-header-section,
+.template-index .shopify-section.pl-chrome-footer-section,
+.template-index .shopify-section[class*='pl-'] {
+  position: relative;
+  z-index: 2;
+}
+
+/* Purelane sections sit above the fixed scene backdrop */
+.template-index .shopify-section:not(.pl-chrome-header-section):not(.pl-chrome-footer-section) {
+  position: relative;
+  z-index: 2;
+}
+
+.template-index .pl-rule i:first-child {
+  background: linear-gradient(90deg, transparent, rgba(236, 230, 247, 0.44));
+}
+
+.template-index .pl-panel-head .pl-rule i:first-child {
+  background: linear-gradient(90deg, transparent, rgba(236, 230, 247, 0.44));
 }

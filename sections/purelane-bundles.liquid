@@ -6,7 +6,7 @@
   assign anchor_id = section.settings.anchor_id | default: 'bundles'
 -%}
 
-<section class="pl-bundles" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-section-id="{{ section.id }}">
+<section class="pl-bundles pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="3" data-section-id="{{ section.id }}">
   <div class="pl-wrap">
 
     {%- if section.settings.heading != blank -%}
@@ -42,10 +42,7 @@
             {%- if pix.size > 0 -%}
               <div class="pl-tierpix{% if pix.size >= 5 %} pl-tierpix--five{% endif %}" aria-hidden="true">
                 {%- for product in pix limit: 5 -%}
-                  {%- assign img = product.featured_image -%}
-                  {%- if img -%}
-                    {{ img | image_url: width: 160 | image_tag: loading: 'lazy', alt: '', class: 'pl-tierpix__img' }}
-                  {%- endif -%}
+                  {% render 'purelane-product-media', product: product, context: 'tier' %}
                 {%- endfor -%}
               </div>
             {%- endif -%}

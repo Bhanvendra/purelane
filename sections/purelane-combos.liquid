@@ -6,7 +6,7 @@
   assign anchor_id = section.settings.anchor_id | default: 'combos'
 -%}
 
-<section class="pl-combos" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-section-id="{{ section.id }}">
+<section class="pl-combos pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="3" data-section-id="{{ section.id }}">
   <div class="pl-wrap">
 
     <div class="pl-panel-head">
@@ -60,11 +60,7 @@
                     endcase
                   -%}
                   <span class="pl-stack__it">
-                    {%- if img -%}
-                      {{ img | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title, class: 'pl-stack__img' }}
-                    {%- else -%}
-                      <span class="pl-stack__tile">{% render 'purelane-icon', name: 'leaf' %}</span>
-                    {%- endif -%}
+                    {% render 'purelane-product-media', product: product, context: 'stack' %}
                     <span>{{ caption | default: product.title }}</span>
                   </span>
                   {%- unless forloop.last -%}<span class="pl-stack__plus" aria-hidden="true">+</span>{%- endunless -%}

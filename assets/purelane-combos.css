@@ -18,7 +18,10 @@
 
 .pl-stack{display:flex;align-items:flex-end;gap:3px}
 .pl-stack__it{flex:1 1 0;min-width:0;text-align:center;display:flex;flex-direction:column;align-items:center}
-.pl-stack__img{height:66px;width:auto;margin:0 auto 8px;object-fit:contain;filter:drop-shadow(0 8px 13px rgba(1,24,22,.5))}
+.pl-card__shot .pl-pimg{height:122px;width:auto;filter:drop-shadow(0 12px 18px rgba(1,24,22,.5))}
+.pl-stack__img.pl-pimg{height:66px;width:auto;margin:0 auto 8px;filter:drop-shadow(0 8px 13px rgba(1,24,22,.5))}
+.pl-tierpix__img.pl-pimg{height:62px;width:auto;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(1,24,22,.5))}
+.pl-tierpix--five .pl-tierpix__img.pl-pimg{height:54px}
 .pl-stack__tile{height:66px;width:44px;margin:0 auto 8px;display:grid;place-items:center;border-radius:9px;
   background:rgba(236,230,247,.08);border:1px dashed rgba(236,230,247,.26);color:var(--pl-accent)}
 .pl-stack__tile svg{width:17px;height:17px}

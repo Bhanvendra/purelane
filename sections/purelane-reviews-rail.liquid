@@ -6,7 +6,7 @@
   assign anchor_id = section.settings.anchor_id | default: 'reviews'
 -%}
 
-<section class="pl-revband pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="3" data-section-id="{{ section.id }}">
+<section class="pl-revband pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="1" data-section-id="{{ section.id }}">
   <div class="pl-wrap">
     <div class="pl-revhead">
       {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}

@@ -8,6 +8,7 @@
 
 <section class="pl-sec pl-pillars-section pl-rv" {% if anchor_id != blank %}id="{{ anchor_id | escape }}"{% endif %} data-pl-scene="2" data-section-id="{{ section.id }}">
   <div class="pl-wrap">
+    {%- if pillar_blocks.size > 0 -%}
     <div class="pl-pillars">
       {%- for block in pillar_blocks -%}
         <article class="pl-glass pl-pillar pl-rv{% if forloop.index > 1 %} pl-rv--d{{ forloop.index | minus: 1 }}{% endif %}" {{ block.shopify_attributes }}>
@@ -20,6 +21,7 @@
         </article>
       {%- endfor -%}
     </div>
+    {%- endif -%}
   </div>
 </section>
 

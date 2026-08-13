@@ -25,7 +25,7 @@
         </div>
 
         {%- if slide_blocks.size > 0 -%}
-          <div class="pl-glass-2 pl-rot" data-pl-proof-rot aria-hidden="true">
+          <div class="pl-glass-2 pl-rot" data-pl-proof-rot role="region" aria-label="{{ section.settings.rotator_label | default: 'Product highlights' | escape }}">
             <div class="pl-rot__frame">
               {%- for block in slide_blocks -%}
                 {%- if block.settings.product != blank -%}
@@ -44,9 +44,9 @@
               <b data-pl-rot-name>{{ first_slide.settings.name | default: first_slide.settings.product.title }}</b>
               <span data-pl-rot-note>{{ first_slide.settings.note }}</span>
             </div>
-            <div class="pl-rot__dots" data-pl-rot-dots>
+            <div class="pl-rot__dots" data-pl-rot-dots role="tablist" aria-label="Product slides">
               {%- for block in slide_blocks -%}
-                <i{% if forloop.first %} class="on"{% endif %}></i>
+                <button type="button"{% if forloop.first %} class="on"{% endif %} role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ block.settings.name | default: block.settings.product.title | escape }}"></button>
               {%- endfor -%}
             </div>
           </div>
@@ -80,7 +80,8 @@
     { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "Gentle on everything else." },
     { "type": "textarea", "id": "body", "label": "Body", "default": "Every formula is built on plant-derived cleansers and essential oils. It behaves exactly like the cleaner you are used to, minus the things you never signed up for." },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "See the ingredient list" },
-    { "type": "text", "id": "cta_link", "label": "CTA link", "default": "#ingredients" }
+    { "type": "text", "id": "cta_link", "label": "CTA link", "default": "#ingredients" },
+    { "type": "text", "id": "rotator_label", "label": "Rotator accessible name", "default": "Product highlights" }
   ],
   "blocks": [
     {

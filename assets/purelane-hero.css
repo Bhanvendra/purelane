@@ -59,27 +59,14 @@
 }
 @media(max-width:900px){
   .pl-hero__copy{max-width:none}
-  .pl-hero{
-    min-height:auto;
-    padding-top:132px;
-    padding-bottom:48px;
-  }
-  .pl-hero__grid{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-  }
-  .pl-hero__copy{order:1}
   .pl-hero__prod{
-    order:2;
     position:relative;
     right:auto;
     bottom:auto;
-    width:min(72vw,300px);
-    margin:0 auto;
+    width:min(88vw,420px);
+    margin:20px auto 0;
     filter:none;
   }
-  .pl-hstage{height:clamp(240px,36svh,340px)}
 }
 
 .pl-hstage{position:relative;width:100%;height:clamp(380px,74svh,680px)}

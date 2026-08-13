@@ -1,10 +1,4 @@
 {%- comment -%}
-  Shared Purelane assets: Google fonts + design tokens.
-  Include at the top of every purelane-*.liquid section.
+  Purelane sections share tokens loaded once from layout/theme.liquid on the homepage.
+  Section CSS files are still loaded per-section for theme editor isolation.
 {%- endcomment -%}
-{% comment %}theme-check-disable RemoteAsset{% endcomment %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
-{{ 'purelane-product-sprites.css' | asset_url | stylesheet_tag }}

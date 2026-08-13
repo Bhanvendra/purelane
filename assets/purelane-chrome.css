@@ -68,6 +68,9 @@
 }
 .pl-nav a:hover{color:var(--pl-surface,#faf7fd)}
 .pl-nav a:hover::after{right:0}
+.pl-nav a:focus-visible,.pl-rail a:focus-visible,.pl-chrome__drawer a:focus-visible,.pl-chrome__ico:focus-visible{
+  outline:2px solid var(--pl-accent,#f0a03c);outline-offset:3px;border-radius:6px;
+}
 .pl-navtools{display:flex;align-items:center;gap:4px;margin-left:auto}
 .pl-chrome__ico{
   width:38px;height:38px;border-radius:50%;display:grid;place-items:center;

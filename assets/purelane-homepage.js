@@ -5,31 +5,33 @@
   if (!document.body.classList.contains('template-index')) return;
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealObserver;
 
-  /* Reveal on scroll */
-  var revs = document.querySelectorAll('.pl-rv');
-  if ('IntersectionObserver' in window && !reduce) {
-    var ro = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('pl-rv--in');
-            ro.unobserve(e.target);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.12 }
-    );
-    revs.forEach(function (el) {
-      ro.observe(el);
-    });
-  } else {
-    revs.forEach(function (el) {
-      el.classList.add('pl-rv--in');
-    });
+  function initReveal() {
+    if (revealObserver) revealObserver.disconnect();
+    var revs = document.querySelectorAll('.pl-rv:not(.pl-rv--in)');
+    if ('IntersectionObserver' in window && !reduce) {
+      revealObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('pl-rv--in');
+              revealObserver.unobserve(e.target);
+            }
+          });
+        },
+        { rootMargin: '0px 0px -12% 0px', threshold: 0.12 }
+      );
+      revs.forEach(function (el) {
+        revealObserver.observe(el);
+      });
+    } else {
+      revs.forEach(function (el) {
+        el.classList.add('pl-rv--in');
+      });
+    }
   }
 
-  /* Scene crossfade */
   var scenes = [].slice.call(document.querySelectorAll('.pl-scene'));
   var zones = [].slice.call(document.querySelectorAll('[data-pl-scene]'));
   var stage = document.getElementById('pl-scenes');
@@ -55,14 +57,12 @@
     setScene(n);
   }
 
-  /* Progress rail */
-  var railLinks = [].slice.call(document.querySelectorAll('.pl-rail a'));
-  var targets = railLinks.map(function (a) {
-    var href = a.getAttribute('href');
-    return href && href.charAt(0) === '#' ? document.querySelector(href) : null;
-  });
-
   function syncRail() {
+    var railLinks = [].slice.call(document.querySelectorAll('.pl-rail a'));
+    var targets = railLinks.map(function (a) {
+      var href = a.getAttribute('href');
+      return href && href.charAt(0) === '#' ? document.querySelector(href) : null;
+    });
     var mid = window.scrollY + window.innerHeight * 0.42;
     var idx = 0;
     targets.forEach(function (t, i) {
@@ -73,9 +73,8 @@
     });
   }
 
-  /* Header shrink on scroll */
-  var hdr = document.getElementById('pl-chrome-hdr');
   function syncHeader() {
+    var hdr = document.getElementById('pl-chrome-hdr');
     if (hdr) hdr.classList.toggle('up', window.scrollY > 60);
   }
 
@@ -85,13 +84,11 @@
     syncHeader();
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  /* Mobile drawer */
-  var burger = document.querySelector('[data-pl-menu-toggle]');
-  var drawer = document.querySelector('[data-pl-menu-drawer]');
-  if (burger && drawer) {
+  function initMobileNav() {
+    var burger = document.querySelector('[data-pl-menu-toggle]');
+    var drawer = document.querySelector('[data-pl-menu-drawer]');
+    if (!burger || !drawer || burger.dataset.plMenuInit === 'true') return;
+    burger.dataset.plMenuInit = 'true';
     burger.addEventListener('click', function () {
       var open = drawer.classList.toggle('open');
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -104,5 +101,16 @@
     });
   }
 
-  document.addEventListener('shopify:section:load', onScroll);
+  function initPurelaneHomepage() {
+    initReveal();
+    initMobileNav();
+    onScroll();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  initPurelaneHomepage();
+
+  document.addEventListener('shopify:section:load', function () {
+    initPurelaneHomepage();
+  });
 })();

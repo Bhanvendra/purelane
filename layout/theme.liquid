@@ -287,6 +287,7 @@
       <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
       {% comment %}theme-check-enable RemoteAsset{% endcomment %}
       {{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+      {{ 'purelane-product-sprites.css' | asset_url | stylesheet_tag }}
       {{ 'purelane-scenes.css' | asset_url | stylesheet_tag }}
       {{ 'purelane-homepage.css' | asset_url | stylesheet_tag }}
     {% endif %}
@@ -300,6 +301,7 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
+    {%- unless template.name == 'index' -%}
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -309,6 +311,7 @@
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
     {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}

@@ -81,9 +81,9 @@
                   <em>Save {{ variant.compare_at_price | minus: variant.price | money }}</em>
                 {%- endif -%}
               </div>
-              <div class="pl-combo__fine">Inclusive of all taxes · COD available</div>
-              <a class="pl-btn {% if featured %}pl-btn--primary{% else %}pl-btn--ghost{% endif %}" href="{{ bundle.url | default: '#' }}">
-                Shop bundle
+              <div class="pl-combo__fine">{{ section.settings.fine_print }}</div>
+              <a class="pl-btn {% if featured %}pl-btn--primary{% else %}pl-btn--ghost{% endif %}" href="{{ block.settings.cta_link | default: section.settings.default_cta_link | default: '#bundles' }}">
+                {{ block.settings.cta_label | default: section.settings.default_cta_label }}
                 {% render 'purelane-icon', name: 'arrow' %}
               </a>
             </div>
@@ -137,6 +137,24 @@
       "id": "footnote",
       "label": "Footnote below rail",
       "default": "Tapping \"Shop bundle\" opens the bundle picker with these products already added. You can still swap anything before you pay."
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print under price",
+      "default": "Inclusive of all taxes · COD available"
+    },
+    {
+      "type": "text",
+      "id": "default_cta_label",
+      "label": "Default CTA label",
+      "default": "Shop bundle"
+    },
+    {
+      "type": "text",
+      "id": "default_cta_link",
+      "label": "Default CTA link",
+      "default": "#bundles"
     }
   ],
   "blocks": [

@@ -71,7 +71,7 @@
           {%- for block in badge_blocks -%}
             <div class="pl-glass-2">
               {% render 'purelane-icon', name: block.settings.icon %}
-              {{ block.settings.label | split: '|' | first | strip }}
+              {{ block.settings.label | replace: '|', ' · ' | replace: '  ', ' ' | strip }}
             </div>
           {%- endfor -%}
         </div>
@@ -128,7 +128,7 @@
         {%- if stage_blocks.size > 1 -%}
           <div class="pl-hdots" role="tablist" aria-label="Product bundle preview">
             {%- for block in stage_blocks -%}
-              <button type="button" class="{% if forloop.first %}on{% endif %}" role="tab" aria-selected="{{ forloop.first }}" aria-label="Show {{ forloop.index }} product{% if forloop.index != 1 %}s{% endif %}"></button>
+              <button type="button" class="{% if forloop.first %}on{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show {{ forloop.index }} product{% if forloop.index != 1 %}s{% endif %}"></button>
             {%- endfor -%}
           </div>
         {%- endif -%}

@@ -66,9 +66,9 @@
                 class="pl-btn pl-btn--ghost pl-btn--sm pl-add-btn"
                 data-variant-id="{{ variant.id }}"
                 data-add-to-cart
-              >Add to cart</button>
+              >{{ section.settings.add_to_cart_label }}</button>
             {%- else -%}
-              <button type="button" class="pl-btn pl-btn--ghost pl-btn--sm" disabled>Sold out</button>
+              <button type="button" class="pl-btn pl-btn--ghost pl-btn--sm" disabled>{{ section.settings.sold_out_label }}</button>
             {%- endif -%}
           </article>
         {%- endfor -%}
@@ -120,6 +120,18 @@
       "max": 12,
       "step": 1,
       "default": 8
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_label",
+      "label": "Sold out button label",
+      "default": "Sold out"
     }
   ],
   "presets": [

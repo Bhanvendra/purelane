@@ -99,7 +99,7 @@
           "type": "stage",
           "settings": {
             "label": "Any 3 products",
-            "products": ["kitchen-cleaner-foaming", "organic-dishwash-liquid-gel", "tap-cleaner-limescale-remover"],
+            "products": ["tap-cleaner-limescale-remover", "copper-bronze-brass-cleaner", "kitchen-cleaner-foaming"],
             "bundle_product": "bundle-any-3-products"
           }
         }
@@ -121,7 +121,8 @@
           "settings": {
             "heading": "Works like a charm",
             "quote": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
-            "name": "Anita"
+            "name": "Anita",
+            "product": "laundry-detergent-non-toxic"
           }
         },
         "review_2": {
@@ -129,7 +130,8 @@
           "settings": {
             "heading": "Best dishwash ever",
             "quote": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
-            "name": "Priya"
+            "name": "Priya",
+            "product": "organic-dishwash-liquid-gel"
           }
         },
         "review_3": {
@@ -137,7 +139,8 @@
           "settings": {
             "heading": "Great product, great packaging",
             "quote": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
-            "name": "Sunita"
+            "name": "Sunita",
+            "product": "gentle-hydrating-liquid-handwash"
           }
         },
         "review_4": {
@@ -145,7 +148,8 @@
           "settings": {
             "heading": "Dog friendly",
             "quote": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
-            "name": "Rohit S."
+            "name": "Rohit S.",
+            "product": "natural-herbal-floor-cleaner"
           }
         },
         "review_5": {
@@ -153,7 +157,8 @@
           "settings": {
             "heading": "Sparkling taps again",
             "quote": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.",
-            "name": "Verified buyer"
+            "name": "Verified buyer",
+            "product": "tap-cleaner-limescale-remover"
           }
         }
       },
@@ -284,7 +289,7 @@
           "settings": {
             "tag": "Starter",
             "bundle_product": "bundle-any-2-products",
-            "tierpix_products": ["kitchen-cleaner-foaming", "tap-cleaner-limescale-remover"],
+            "tierpix_products": ["bundle-any-2-products"],
             "quantity_fallback": 2,
             "bullets": "Pick any two products\nFree shipping across India",
             "cta_label": "Build this box"
@@ -295,7 +300,7 @@
           "settings": {
             "tag": "Most popular",
             "bundle_product": "bundle-any-3-products",
-            "tierpix_products": ["kitchen-cleaner-foaming", "laundry-detergent-non-toxic", "natural-herbal-floor-cleaner"],
+            "tierpix_products": ["kitchen-cleaner-foaming", "tap-cleaner-limescale-remover", "organic-dishwash-liquid-gel"],
             "quantity_fallback": 3,
             "bullets": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India",
             "cta_label": "Build this box",
@@ -408,13 +413,13 @@
   "order": [
     "purelane_header",
     "purelane_hero",
-    "purelane_shop",
-    "purelane_combos",
-    "purelane_bundles",
     "purelane_reviews",
     "purelane_ingredients",
     "purelane_pillars",
     "purelane_proof",
+    "purelane_combos",
+    "purelane_bundles",
+    "purelane_shop",
     "purelane_range",
     "purelane_why_bundles",
     "purelane_categories",

@@ -289,7 +289,6 @@
       {{ 'purelane-base.css' | asset_url | stylesheet_tag }}
       {{ 'purelane-scenes.css' | asset_url | stylesheet_tag }}
       {{ 'purelane-homepage.css' | asset_url | stylesheet_tag }}
-      {{ 'purelane-loi-theme.css' | asset_url | stylesheet_tag }}
     {% endif %}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
@@ -419,6 +418,7 @@
     {%- endif -%}
 
     {% if template.name == 'index' %}
+      {{ 'purelane-loi-theme.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'purelane-homepage.js' | asset_url }}" defer="defer"></script>
     {% endif %}
   </body>

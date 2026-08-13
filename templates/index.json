@@ -240,7 +240,7 @@
           "settings": {
             "bundle_product": "combo-complete-home",
             "title": "Complete home bundle",
-            "included_products": ["kitchen-cleaner-foaming", "non-toxic-toilet-cleaner", "gentle-hydrating-liquid-handwash", "natural-herbal-floor-cleaner", "laundry-detergent-non-toxic"],
+            "included_products": ["kitchen-cleaner-foaming", "non-toxic-toilet-cleaner", "gentle-hydrating-liquid-handwash"],
             "caption_1": "Cuts grease instantly",
             "caption_2": "Kills 99.9% germs",
             "caption_3": "Gentle hydration for hands",

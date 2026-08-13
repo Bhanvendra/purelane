@@ -60,8 +60,9 @@
             {%- endif -%}
 
             {%- if block.settings.bullets != blank -%}
+              {%- assign bullet_lines = block.settings.bullets | newline_to_br | split: '<br />' -%}
               <ul class="pl-tier__list">
-                {%- for line in block.settings.bullets | newline_to_br | split: '<br />' -%}
+                {%- for line in bullet_lines -%}
                   {%- assign trimmed = line | strip -%}
                   {%- if trimmed != blank -%}
                     <li>{% render 'purelane-icon', name: 'check' %}{{ trimmed }}</li>

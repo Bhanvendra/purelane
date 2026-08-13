@@ -16,7 +16,9 @@
 
 .pl-hero__grid{position:relative;z-index:2;width:100%}
 .pl-hero__copy{max-width:600px;position:relative;z-index:3}
-.pl-hero__copy .pl-d1{margin-bottom:20px;text-shadow:0 6px 40px rgba(2,20,19,.55)}
+.pl-hero__copy .pl-d1{margin-bottom:20px;text-shadow:0 6px 40px rgba(2,20,19,.55);color:var(--pl-paper,#ece6f7)}
+.pl-hero__copy .pl-d1 .pl-lime{color:var(--pl-accent,#f0a03c)}
+.pl-hero__copy .pl-lede{color:var(--pl-paper-2,rgba(236,230,247,.74))}
 .pl-hero__cta{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
 
 /* badge rail (desktop) */
@@ -57,7 +59,27 @@
 }
 @media(max-width:900px){
   .pl-hero__copy{max-width:none}
-  .pl-hero__prod{position:relative;right:auto;bottom:auto;width:min(88vw,420px);margin:20px auto 0;filter:none}
+  .pl-hero{
+    min-height:auto;
+    padding-top:132px;
+    padding-bottom:48px;
+  }
+  .pl-hero__grid{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+  .pl-hero__copy{order:1}
+  .pl-hero__prod{
+    order:2;
+    position:relative;
+    right:auto;
+    bottom:auto;
+    width:min(72vw,300px);
+    margin:0 auto;
+    filter:none;
+  }
+  .pl-hstage{height:clamp(240px,36svh,340px)}
 }
 
 .pl-hstage{position:relative;width:100%;height:clamp(380px,74svh,680px)}

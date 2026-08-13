@@ -4,6 +4,10 @@
 {%- liquid
   assign ticker_items = section.blocks | where: 'type', 'ticker_item'
   assign nav_blocks = section.blocks | where: 'type', 'nav_link'
+  assign rail_blocks = section.blocks | where: 'type', 'rail_link'
+  if rail_blocks.size == 0
+    assign rail_blocks = nav_blocks
+  endif
 -%}
 
 <div class="pl-chrome pl-chrome__header-section" data-section-id="{{ section.id }}">
@@ -79,8 +83,8 @@
 
   {%- if section.settings.show_rail -%}
     <nav class="pl-rail" aria-label="Section progress">
-      {%- for block in nav_blocks -%}
-        <a href="{{ block.settings.link | default: '#' }}" aria-label="{{ block.settings.label | escape }}"></a>
+      {%- for block in rail_blocks -%}
+        <a href="{{ block.settings.link | default: '#' }}" aria-label="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}></a>
       {%- endfor -%}
     </nav>
   {%- endif -%}
@@ -132,14 +136,14 @@
     {
       "type": "text",
       "id": "phone",
-      "label": "Header phone number",
-      "default": "+91 9930 123 234"
+      "label": "Header phone number (optional)",
+      "info": "Leave blank to hide. Not in the prototype nav."
     },
     {
       "type": "text",
       "id": "cta_label",
-      "label": "Header CTA label",
-      "default": "Build bundle"
+      "label": "Header CTA label (optional)",
+      "info": "Leave blank to hide."
     },
     {
       "type": "text",
@@ -164,6 +168,14 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Label", "default": "Shop" },
         { "type": "text", "id": "link", "label": "Anchor link", "default": "#shop", "info": "Use #shop, #combos, etc." }
+      ]
+    },
+    {
+      "type": "rail_link",
+      "name": "Progress rail dot",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Accessible label", "default": "Section" },
+        { "type": "text", "id": "link", "label": "Anchor link", "default": "#top" }
       ]
     }
   ],

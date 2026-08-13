@@ -32,18 +32,25 @@
         "nav_ingredients": { "type": "nav_link", "settings": { "label": "Ingredients", "link": "#ingredients" } },
         "nav_how": { "type": "nav_link", "settings": { "label": "How it works", "link": "#how" } },
         "nav_shop": { "type": "nav_link", "settings": { "label": "Shop", "link": "#shop" } },
-        "nav_bundles": { "type": "nav_link", "settings": { "label": "Bundles", "link": "#bundles" } }
+        "nav_bundles": { "type": "nav_link", "settings": { "label": "Bundles", "link": "#bundles" } },
+        "rail_top": { "type": "rail_link", "settings": { "label": "Hero", "link": "#top" } },
+        "rail_ingredients": { "type": "rail_link", "settings": { "label": "Ingredients", "link": "#ingredients" } },
+        "rail_how": { "type": "rail_link", "settings": { "label": "How it works", "link": "#how" } },
+        "rail_proof": { "type": "rail_link", "settings": { "label": "Proof", "link": "#proof" } },
+        "rail_bundles": { "type": "rail_link", "settings": { "label": "Bundles", "link": "#bundles" } },
+        "rail_shop": { "type": "rail_link", "settings": { "label": "Shop", "link": "#shop" } },
+        "rail_reviews": { "type": "rail_link", "settings": { "label": "Reviews", "link": "#reviews" } }
       },
-      "block_order": ["ticker_1", "ticker_2", "ticker_3", "ticker_4", "nav_home", "nav_ingredients", "nav_how", "nav_shop", "nav_bundles"],
+      "block_order": ["ticker_1", "ticker_2", "ticker_3", "ticker_4", "nav_home", "nav_ingredients", "nav_how", "nav_shop", "nav_bundles", "rail_top", "rail_ingredients", "rail_how", "rail_proof", "rail_bundles", "rail_shop", "rail_reviews"],
       "settings": {
         "brand_name": "Purelane",
         "brand_tagline": "Clean, simply",
-        "show_ticker": false,
-        "show_rail": false,
+        "show_ticker": true,
+        "show_rail": true,
         "show_search": true,
         "show_account": true,
-        "phone": "+91 9930 123 234",
-        "cta_label": "Build bundle",
+        "phone": "",
+        "cta_label": "",
         "cta_link": "#bundles"
       }
     },

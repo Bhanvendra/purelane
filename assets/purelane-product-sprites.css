@@ -30,4 +30,4 @@
 .pl-p-toilet{background-image:var(--pl-p-toilet);aspect-ratio:0.6139}
 .pl-p-wm{background-image:var(--pl-p-wm);aspect-ratio:0.6148}
 .pl-pimg{display:block;background-repeat:no-repeat;background-position:center bottom;background-size:contain;flex:0 0 auto}
-.pl-hp.pl-pimg{background-image:var(--pl-img);aspect-ratio:var(--pl-ar,0.5);height:auto}
+.pl-hp.pl-pimg[style*="--pl-img"]{background-image:var(--pl-img);aspect-ratio:var(--pl-ar,0.5);height:auto}
